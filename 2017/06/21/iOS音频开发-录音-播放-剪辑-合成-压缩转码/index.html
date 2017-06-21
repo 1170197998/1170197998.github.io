@@ -1,0 +1,793 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="iOS,音频开发," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="录音:">
+<meta name="keywords" content="iOS,音频开发">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS音频开发(录音+播放+剪辑+合成+压缩转码)">
+<meta property="og:url" content="http://www.stevin3t3y.site/2017/06/21/iOS音频开发-录音-播放-剪辑-合成-压缩转码/index.html">
+<meta property="og:site_name" content="Stevin三天三夜">
+<meta property="og:description" content="录音:">
+<meta property="og:image" content="http://img.blog.csdn.net/20170328215853092?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuZzJxaW5n/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170328222010033?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuZzJxaW5n/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170328231208190?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuZzJxaW5n/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:updated_time" content="2017-06-21T03:50:07.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS音频开发(录音+播放+剪辑+合成+压缩转码)">
+<meta name="twitter:description" content="录音:">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20170328215853092?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuZzJxaW5n/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.stevin3t3y.site/2017/06/21/iOS音频开发-录音-播放-剪辑-合成-压缩转码/"/>
+
+
+
+
+
+  <title>iOS音频开发(录音+播放+剪辑+合成+压缩转码) | Stevin三天三夜</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?238c6206dc082cd80edc5a30178f5554";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Stevin三天三夜</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">共分享，共进步</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.stevin3t3y.site/2017/06/21/iOS音频开发-录音-播放-剪辑-合成-压缩转码/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Stevin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://avatar.csdn.net/7/3/6/1_feng2qing.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Stevin三天三夜">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">iOS音频开发(录音+播放+剪辑+合成+压缩转码)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-21T11:39:46+08:00">
+                2017-06-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS-Objective-C/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS_Objective-C</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="录音"><a href="#录音" class="headerlink" title="录音:"></a><strong>录音:</strong></h2><a id="more"></a>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line">//音频会话</div><div class="line">AVAudioSession *session = [AVAudioSession sharedInstance];</div><div class="line">NSError *sessionError;</div><div class="line">/*</div><div class="line">AVAudioSessionCategoryPlayAndRecord :录制和播放</div><div class="line">AVAudioSessionCategoryAmbient		:用于非以语音为主的应用,随着静音键和屏幕关闭而静音.</div><div class="line">AVAudioSessionCategorySoloAmbient	:类似AVAudioSessionCategoryAmbient不同之处在于它会中止其它应用播放声音。</div><div class="line">AVAudioSessionCategoryPlayback		:用于以语音为主的应用,不会随着静音键和屏幕关闭而静音.可在后台播放声音</div><div class="line">AVAudioSessionCategoryRecord		:用于需要录音的应用,除了来电铃声,闹钟或日历提醒之外的其它系统声音都不会被播放,只提供单纯录音功能.</div><div class="line">*/</div><div class="line">[session setCategory:AVAudioSessionCategoryPlayAndRecord error:&amp;sessionError];</div><div class="line">[session setActive:YES error:nil];</div><div class="line">// 录音参数</div><div class="line">NSDictionary *setting = [NSDictionary dictionaryWithObjectsAndKeys:</div><div class="line">                               [NSNumber numberWithInt:kAudioFormatLinearPCM], AVFormatIDKey,// 编码格式</div><div class="line">                               [NSNumber numberWithFloat:8000], AVSampleRateKey, //采样率</div><div class="line">                               [NSNumber numberWithInt:2], AVNumberOfChannelsKey, //通道数</div><div class="line">                               [NSNumber numberWithInt:16], AVLinearPCMBitDepthKey,  //采样位数(PCM专属)</div><div class="line">                               [NSNumber numberWithBool:NO], AVLinearPCMIsNonInterleaved,  //是否允许音频交叉(PCM专属)</div><div class="line">                               [NSNumber numberWithBool:NO],AVLinearPCMIsFloatKey,  //采样信号是否是浮点数(PCM专属)</div><div class="line">                               [NSNumber numberWithBool:NO], AVLinearPCMIsBigEndianKey,  //是否是大端存储模式(PCM专属)</div><div class="line">                               [NSNumber numberWithInt:AVAudioQualityMax], AVEncoderAudioQualityKey,  //音质</div><div class="line">                               nil];</div><div class="line">self.audioRecorder.delegate = self;</div><div class="line">//开启音频测量</div><div class="line">self.audioRecorder.meteringEnabled = YES;</div><div class="line">//保存路径</div><div class="line">self.audioRecorder = [[AVAudioRecorder alloc] initWithURL:[NSURL URLWithString:filePath] settings:setting error:nil];</div><div class="line">//准备 / 开始录音</div><div class="line">[self.audioRecorder prepareToRecord];</div><div class="line">[self.audioRecorder record];</div><div class="line"></div><div class="line">//暂停录音</div><div class="line">[self.audioRecorder pause];</div><div class="line">//停止录音</div><div class="line">[self.audioRecorder stop];</div><div class="line">//删除录音</div><div class="line"></div><div class="line">//AVAudioRecorderDelegate</div><div class="line">//when a recording has been finished or stopped. This method is NOT called if the recorder is stopped due to an interruption.(录音完成)</div><div class="line">- (void)audioRecorderDidFinishRecording:(AVAudioRecorder *)recorder successfully:(BOOL)flag;</div><div class="line">//if an error occurs while encoding it will be reported to the delegate(编码发生错误)</div><div class="line">- (void)audioRecorderEncodeErrorDidOccur:(AVAudioRecorder *)recorder error:(NSError * __nullable)error;</div><div class="line">//when the audio session has been interrupted while the recorder was recording. The recorded file will be closed.(被打断)</div><div class="line">- (void)audioRecorderBeginInterruption:(AVAudioRecorder *)recorder NS_DEPRECATED_IOS(2_2, 8_0);</div><div class="line">//when the audio session interruption has ended and this recorder had been interrupted while recording(被打断结束)</div><div class="line">- (void)audioRecorderEndInterruption:(AVAudioRecorder *)recorder withOptions:(NSUInteger)flags NS_DEPRECATED_IOS(6_0, 8_0);</div></pre></td></tr></table></figure>
+<h2 id="播放"><a href="#播放" class="headerlink" title="播放"></a><strong>播放</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line">AVAudioSession *session = [AVAudioSession sharedInstance];</div><div class="line">NSError *sessionError;</div><div class="line">[session setCategory:AVAudioSessionCategoryPlayback error:&amp;sessionError];</div><div class="line">[session setActive:YES error:nil];</div><div class="line"></div><div class="line">//开启接近监视(靠近耳朵的时候听筒播放,离开的时候扬声器播放)</div><div class="line">[[UIDevice currentDevice] setProximityMonitoringEnabled:YES];</div><div class="line">[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sensorStateChange:)name:UIDeviceProximityStateDidChangeNotification object:nil];</div><div class="line"></div><div class="line">self.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL URLWithString:filePath] error:nil];</div><div class="line"></div><div class="line">self.audioPlayer.delegate = self;</div><div class="line">//准备播放 / 播放</div><div class="line">[self.audioPlayer prepareToPlay];</div><div class="line">[self.audioPlayer play];</div><div class="line"></div><div class="line">//停止播放</div><div class="line">[self.audioPlayer stop];</div><div class="line">//暂停播放</div><div class="line">[self.audioPlayer pause];</div><div class="line"></div><div class="line">//proximityStateChange:(NSNotificationCenter *)notification方法</div><div class="line">if ([[UIDevice currentDevice] proximityState] == YES) &#123;</div><div class="line">	//靠近耳朵</div><div class="line">    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];</div><div class="line">&#125; else &#123;</div><div class="line">	//离开耳朵</div><div class="line">    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];</div><div class="line">&#125;</div><div class="line"></div><div class="line">//AVAudioPlayerDelegate</div><div class="line">//when a sound has finished playing. This method is NOT called if the player is stopped due to an interruption(播放完成)</div><div class="line">- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag;</div><div class="line">//if an error occurs while decoding it will be reported to the delegate.(解码结束)</div><div class="line">- (void)audioPlayerDecodeErrorDidOccur:(AVAudioPlayer *)player error:(NSError * __nullable)error;</div><div class="line">//when the audio session has been interrupted while the player was playing. The player will have been paused(被打断)</div><div class="line">- (void)audioPlayerBeginInterruption:(AVAudioPlayer *)player NS_DEPRECATED_IOS(2_2, 8_0);</div><div class="line">//when the audio session interruption has ended and this player had been interrupted while playing(被打断结束)</div><div class="line">- (void)audioPlayerEndInterruption:(AVAudioPlayer *)player withOptions:(NSUInteger)flags NS_DEPRECATED_IOS(6_0, 8_0);</div></pre></td></tr></table></figure>
+<h2 id="剪辑"><a href="#剪辑" class="headerlink" title="剪辑"></a><strong>剪辑</strong></h2><h3 id="将路径filePath下的音频文件从time截取到time2后在resultPath中输出"><a href="#将路径filePath下的音频文件从time截取到time2后在resultPath中输出" class="headerlink" title="将路径filePath下的音频文件从time截取到time2后在resultPath中输出"></a>将路径filePath下的音频文件从time截取到time2后在resultPath中输出</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">//AVURLAsset是AVAsset的子类,AVAsset类专门用于获取多媒体的相关信息,包括获取多媒体的画面、声音等信息.而AVURLAsset子类的作用则是根据NSURL来初始化AVAsset对象.</div><div class="line">AVURLAsset *videoAsset = [AVURLAsset assetWithURL:[NSURL fileURLWithPath:filePath]];</div><div class="line">//音频输出会话</div><div class="line">//AVAssetExportPresetAppleM4A: This export option will produce an audio-only .m4a file with appropriate iTunes gapless playback data(输出音频,并且是.m4a格式)</div><div class="line">AVAssetExportSession *exportSession = [AVAssetExportSession exportSessionWithAsset:videoAsset presetName:AVAssetExportPresetAppleM4A];</div><div class="line">//设置输出路径 / 文件类型 / 截取时间段</div><div class="line">exportSession.outputURL = [NSURL fileURLWithPath:resultPath];</div><div class="line">exportSession.outputFileType = AVFileTypeAppleM4A;</div><div class="line">exportSession.timeRange = CMTimeRangeFromTimeToTime(CMTimeMake(time1, 1), CMTimeMake(time2, 1));</div><div class="line">[exportSession exportAsynchronouslyWithCompletionHandler:^&#123;</div><div class="line">	//exporeSession.status</div><div class="line">&#125;];</div></pre></td></tr></table></figure>
+<h2 id="合成"><a href="#合成" class="headerlink" title="合成"></a><strong>合成</strong></h2><h3 id="将路径filePath1和路径filePath2下的音频合成"><a href="#将路径filePath1和路径filePath2下的音频合成" class="headerlink" title="将路径filePath1和路径filePath2下的音频合成"></a>将路径filePath1和路径filePath2下的音频合成</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">//AVURLAsset子类的作用则是根据NSURL来初始化AVAsset对象.</div><div class="line">AVURLAsset *videoAsset1 = [[AVURLAsset alloc] initWithURL:[NSURL fileURLWithPath:filePath1] options:nil];</div><div class="line">AVURLAsset *videoAsset2 = [[AVURLAsset alloc] initWithURL:[NSURL fileURLWithPath:filePath2] options:nil];</div><div class="line">//音频轨迹(一般视频至少有2个轨道,一个播放声音,一个播放画面.音频有一个)</div><div class="line">AVAssetTrack *assetTrack1 = [[videoAsset1 tracksWithMediaType:AVMediaTypeAudio] objectAtIndex:0];</div><div class="line">AVAssetTrack *assetTrack2 = [[videoAsset2 tracksWithMediaType:AVMediaTypeAudio] objectAtIndex:0];</div><div class="line">//AVMutableComposition用来合成视频或音频</div><div class="line">AVMutableComposition *composition = [AVMutableComposition composition];</div><div class="line">AVMutableCompositionTrack *compositionTrack = [composition addMutableTrackWithMediaType:AVMediaTypeAudio preferredTrackID:kCMPersistentTrackID_Invalid];</div><div class="line">// 把第二段录音添加到第一段后面</div><div class="line">[compositionTrack insertTimeRange:CMTimeRangeMake(kCMTimeZero, videoAsset1.duration) ofTrack:assetTrack1 atTime:kCMTimeZero error:nil];</div><div class="line">[compositionTrack insertTimeRange:CMTimeRangeMake(kCMTimeZero, videoAsset2.duration) ofTrack:assetTrack2 atTime:videoAsset1.duration error:nil];</div><div class="line">//输出</div><div class="line">AVAssetExportSession *exporeSession = [AVAssetExportSession exportSessionWithAsset:composition presetName:AVAssetExportPresetAppleM4A];</div><div class="line">exporeSession.outputFileType = AVFileTypeAppleM4A;</div><div class="line">exporeSession.outputURL = [NSURL fileURLWithPath:resultPath];</div><div class="line">[exporeSession exportAsynchronouslyWithCompletionHandler:^&#123;</div><div class="line">    //exporeSession.status</div><div class="line">&#125;];</div></pre></td></tr></table></figure>
+<h2 id="压缩转码"><a href="#压缩转码" class="headerlink" title="压缩转码"></a><strong>压缩转码</strong></h2><h3 id="下载LAME-Lame-Aint-an-MP3-Encoder"><a href="#下载LAME-Lame-Aint-an-MP3-Encoder" class="headerlink" title="下载LAME (Lame Aint an MP3 Encoder)"></a>下载<a href="https://sourceforge.net/projects/lame/files/lame/" target="_blank" rel="external">LAME (Lame Aint an MP3 Encoder)</a></h3><p><img src="http://img.blog.csdn.net/20170328215853092?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuZzJxaW5n/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<h3 id="双击解压后放到一个文件夹下-文件夹需要命名为lame-否则无法生成-h和-a文件"><a href="#双击解压后放到一个文件夹下-文件夹需要命名为lame-否则无法生成-h和-a文件" class="headerlink" title="双击解压后放到一个文件夹下,文件夹需要命名为lame,否则无法生成.h和.a文件"></a>双击解压后放到一个文件夹下,文件夹需要命名为<code>lame</code>,否则无法生成<code>.h</code>和<code>.a</code>文件</h3><h3 id="使用Terminal进入该文件夹-编译生成静态库-脚本代码"><a href="#使用Terminal进入该文件夹-编译生成静态库-脚本代码" class="headerlink" title="使用Terminal进入该文件夹,编译生成静态库,脚本代码"></a>使用<code>Terminal</code>进入该文件夹,编译生成静态库,<a href="https://github.com/kewlbear/lame-ios-build/blob/master/build-lame.sh" target="_blank" rel="external">脚本代码</a></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$:cd cd /Users/mac/Desktop/lame</div><div class="line">//创建build_lame.sh</div><div class="line">$:touch build_lame.sh</div><div class="line">//打开build_lame.sh,粘贴脚本代码</div><div class="line">$:open build_lame.sh</div><div class="line">//编译执行脚本,生成静态库,需要输入本机密码</div><div class="line">$:sudo sh build_lame.sh</div></pre></td></tr></table></figure>
+<p><img src="http://img.blog.csdn.net/20170328222010033?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuZzJxaW5n/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<h3 id="将fat-lame文件夹下的include文件夹和lib文件夹放入工程-再写一个OC的类调用lame-h"><a href="#将fat-lame文件夹下的include文件夹和lib文件夹放入工程-再写一个OC的类调用lame-h" class="headerlink" title="将fat-lame文件夹下的include文件夹和lib文件夹放入工程,再写一个OC的类调用lame.h"></a>将<code>fat-lame</code>文件夹下的<code>include</code>文件夹和<code>lib</code>文件夹放入工程,再写一个<code>OC</code>的类调用<code>lame.h</code></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line">@try &#123;</div><div class="line">    int read, write;</div><div class="line">    FILE *pcm = fopen([filePath cStringUsingEncoding:1], &quot;rb&quot;);//被转换的音频文件位置</div><div class="line">    fseek(pcm, 4*1024, SEEK_CUR);</div><div class="line">    FILE *mp3 = fopen([resultPath cStringUsingEncoding:1], &quot;wb&quot;);//生成的Mp3文件位置</div><div class="line">    </div><div class="line">    const int PCM_SIZE = 8192;</div><div class="line">    const int MP3_SIZE = 8192;</div><div class="line">    short int pcm_buffer[PCM_SIZE*2];</div><div class="line">    unsigned char mp3_buffer[MP3_SIZE];</div><div class="line">    </div><div class="line">    // 初始化lame编码器</div><div class="line">    lame_t lame = lame_init();</div><div class="line">    // 设置lame mp3编码的采样率 / 声道数 / 比特率</div><div class="line">    lame_set_in_samplerate(lame, 8000);</div><div class="line">    lame_set_num_channels(lame,2);</div><div class="line">    lame_set_out_samplerate(lame, 8000);</div><div class="line">    lame_set_brate(lame, 8);</div><div class="line">    // MP3音频质量.0~9.其中0是最好,非常慢,9是最差.</div><div class="line">    lame_set_quality(lame, 7);</div><div class="line">    </div><div class="line">    // 设置mp3的编码方式</div><div class="line">    lame_set_VBR(lame, vbr_default);</div><div class="line">    lame_init_params(lame);</div><div class="line"></div><div class="line">    do &#123;</div><div class="line">        size_t size = (size_t)(2 * sizeof(short int));</div><div class="line">        read = fread(pcm_buffer, size, PCM_SIZE, pcm);</div><div class="line">        if (read == 0) &#123;</div><div class="line">            write = lame_encode_flush(lame, mp3_buffer, MP3_SIZE);</div><div class="line">        &#125; else &#123;</div><div class="line">            write = lame_encode_buffer_interleaved(lame, pcm_buffer, read, mp3_buffer, MP3_SIZE);</div><div class="line">        &#125;</div><div class="line">        fwrite(mp3_buffer, write, 1, mp3);</div><div class="line">        </div><div class="line">    &#125; while (read != 0);</div><div class="line">    </div><div class="line">    lame_close(lame);</div><div class="line">    fclose(mp3);</div><div class="line">    fclose(pcm);</div><div class="line">&#125;</div><div class="line">@catch (NSException *exception) &#123;</div><div class="line">    NSLog(@&quot;%@&quot;,[exception description]);</div><div class="line">&#125;</div><div class="line">@finally &#123;</div><div class="line">    // 转码完成</div><div class="line">    return resultPath;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="基本上可以将100K左右的录音文件压缩到10K以下"><a href="#基本上可以将100K左右的录音文件压缩到10K以下" class="headerlink" title="基本上可以将100K左右的录音文件压缩到10K以下"></a>基本上可以将100K左右的录音文件压缩到10K以下</h3><p><img src="http://img.blog.csdn.net/20170328231208190?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuZzJxaW5n/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/qrcode.jpg" alt="Stevin wechat" style="width: 200px; max-width: 100%;"/>
+    <div>扫码及时获取更多文章</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/iOS-音频开发/" rel="tag"># iOS,音频开发</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/21/一步一步教你理解和实现iOS中的链式编程和函数式编程/" rel="next" title="一步一步教你理解和实现iOS中的链式编程和函数式编程">
+                <i class="fa fa-chevron-left"></i> 一步一步教你理解和实现iOS中的链式编程和函数式编程
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://avatar.csdn.net/7/3/6/1_feng2qing.jpg"
+               alt="Stevin" />
+          <p class="site-author-name" itemprop="name">Stevin</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/about/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/1170197998" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.csdn.net/feng2qing?viewmode=list" title="CSDN Blog" target="_blank">CSDN Blog</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#录音"><span class="nav-number">1.</span> <span class="nav-text">录音:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#播放"><span class="nav-number">2.</span> <span class="nav-text">播放</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#剪辑"><span class="nav-number">3.</span> <span class="nav-text">剪辑</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#将路径filePath下的音频文件从time截取到time2后在resultPath中输出"><span class="nav-number">3.1.</span> <span class="nav-text">将路径filePath下的音频文件从time截取到time2后在resultPath中输出</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#合成"><span class="nav-number">4.</span> <span class="nav-text">合成</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#将路径filePath1和路径filePath2下的音频合成"><span class="nav-number">4.1.</span> <span class="nav-text">将路径filePath1和路径filePath2下的音频合成</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#压缩转码"><span class="nav-number">5.</span> <span class="nav-text">压缩转码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#下载LAME-Lame-Aint-an-MP3-Encoder"><span class="nav-number">5.1.</span> <span class="nav-text">下载LAME (Lame Aint an MP3 Encoder)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#双击解压后放到一个文件夹下-文件夹需要命名为lame-否则无法生成-h和-a文件"><span class="nav-number">5.2.</span> <span class="nav-text">双击解压后放到一个文件夹下,文件夹需要命名为lame,否则无法生成.h和.a文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用Terminal进入该文件夹-编译生成静态库-脚本代码"><span class="nav-number">5.3.</span> <span class="nav-text">使用Terminal进入该文件夹,编译生成静态库,脚本代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#将fat-lame文件夹下的include文件夹和lib文件夹放入工程-再写一个OC的类调用lame-h"><span class="nav-number">5.4.</span> <span class="nav-text">将fat-lame文件夹下的include文件夹和lib文件夹放入工程,再写一个OC的类调用lame.h</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基本上可以将100K左右的录音文件压缩到10K以下"><span class="nav-number">5.5.</span> <span class="nav-text">基本上可以将100K左右的录音文件压缩到10K以下</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Stevin</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
