@@ -1,0 +1,1224 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="IIS,Apache,Web服务," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="当前环境:Mac + PD(64位win10) 基于Windows安装配置Apache服务一:在Apache官网下载Apache1&amp;gt;点击download! 2&amp;gt;选择当前最新版本2.4.27 3&amp;gt;点击 File for Microsoft Windows">
+<meta name="keywords" content="IIS,Apache,Web服务">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于Windows安装配置Apache服务 &#x2F; 基于Windows安装配置IIS服务 &#x2F; Apache与IIS对比">
+<meta property="og:url" content="http://www.stevin3t3y.site/2017/08/03/基于Windows安装配置Apache服务-基于Windows安装配置IIS服务-Apache与IIS对比/index.html">
+<meta property="og:site_name" content="Stevin三天三夜">
+<meta property="og:description" content="当前环境:Mac + PD(64位win10) 基于Windows安装配置Apache服务一:在Apache官网下载Apache1&amp;gt;点击download! 2&amp;gt;选择当前最新版本2.4.27 3&amp;gt;点击 File for Microsoft Windows">
+<meta property="og:image" content="http://img.blog.csdn.net/20170802220839468?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuZzJxaW5n/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170802220850962?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuZzJxaW5n/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170802220901037?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuZzJxaW5n/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170802220910228?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuZzJxaW5n/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170802220918980?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuZzJxaW5n/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170802221916811?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuZzJxaW5n/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170802222300910?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuZzJxaW5n/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170802230508938?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuZzJxaW5n/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170802223112914?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuZzJxaW5n/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170802224316795?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuZzJxaW5n/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170802224431243?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuZzJxaW5n/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170802233132646?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuZzJxaW5n/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170802233201998?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuZzJxaW5n/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170802233242413?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuZzJxaW5n/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170802233338663?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuZzJxaW5n/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170802233408223?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuZzJxaW5n/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170802233442146?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuZzJxaW5n/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:updated_time" content="2017-08-02T16:04:02.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="基于Windows安装配置Apache服务 &#x2F; 基于Windows安装配置IIS服务 &#x2F; Apache与IIS对比">
+<meta name="twitter:description" content="当前环境:Mac + PD(64位win10) 基于Windows安装配置Apache服务一:在Apache官网下载Apache1&amp;gt;点击download! 2&amp;gt;选择当前最新版本2.4.27 3&amp;gt;点击 File for Microsoft Windows">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20170802220839468?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuZzJxaW5n/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.stevin3t3y.site/2017/08/03/基于Windows安装配置Apache服务-基于Windows安装配置IIS服务-Apache与IIS对比/"/>
+
+
+
+
+
+  <title>基于Windows安装配置Apache服务 / 基于Windows安装配置IIS服务 / Apache与IIS对比 | Stevin三天三夜</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?238c6206dc082cd80edc5a30178f5554";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Stevin三天三夜</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">共分享，共进步</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.stevin3t3y.site/2017/08/03/基于Windows安装配置Apache服务-基于Windows安装配置IIS服务-Apache与IIS对比/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Stevin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://avatar.csdn.net/7/3/6/1_feng2qing.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Stevin三天三夜">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">基于Windows安装配置Apache服务 / 基于Windows安装配置IIS服务 / Apache与IIS对比</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-03T00:01:43+08:00">
+                2017-08-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/server/" itemprop="url" rel="index">
+                    <span itemprop="name">server</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a class="cloud-tie-join-count" href="/2017/08/03/基于Windows安装配置Apache服务-基于Windows安装配置IIS服务-Apache与IIS对比/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count join-count" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>当前环境:Mac + PD(64位win10)</p>
+<h2 id="基于Windows安装配置Apache服务"><a href="#基于Windows安装配置Apache服务" class="headerlink" title="基于Windows安装配置Apache服务"></a><strong>基于Windows安装配置Apache服务</strong></h2><h3 id="一-在Apache官网下载Apache"><a href="#一-在Apache官网下载Apache" class="headerlink" title="一:在Apache官网下载Apache"></a><strong>一:在<a href="http://httpd.apache.org" target="_blank" rel="external">Apache官网</a>下载Apache</strong></h3><h4 id="1-gt-点击download"><a href="#1-gt-点击download" class="headerlink" title="1&gt;点击download!"></a>1&gt;点击download!</h4><p><img src="http://img.blog.csdn.net/20170802220839468?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuZzJxaW5n/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<h4 id="2-gt-选择当前最新版本2-4-27"><a href="#2-gt-选择当前最新版本2-4-27" class="headerlink" title="2&gt;选择当前最新版本2.4.27"></a>2&gt;选择当前最新版本2.4.27</h4><p><img src="http://img.blog.csdn.net/20170802220850962?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuZzJxaW5n/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<h4 id="3-gt-点击-File-for-Microsoft-Windows"><a href="#3-gt-点击-File-for-Microsoft-Windows" class="headerlink" title="3&gt;点击 File for Microsoft Windows"></a>3&gt;点击 File for Microsoft Windows</h4><a id="more"></a>
+<p><img src="http://img.blog.csdn.net/20170802220901037?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuZzJxaW5n/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<h4 id="4-gt-这里面还有一些别的开发工具-这里选择Apache-Lounge"><a href="#4-gt-这里面还有一些别的开发工具-这里选择Apache-Lounge" class="headerlink" title="4&gt;这里面还有一些别的开发工具, 这里选择Apache Lounge"></a>4&gt;这里面还有一些别的开发工具, 这里选择Apache Lounge</h4><p><img src="http://img.blog.csdn.net/20170802220910228?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuZzJxaW5n/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<h4 id="5-gt-根据实际电脑操作系统下载压缩包"><a href="#5-gt-根据实际电脑操作系统下载压缩包" class="headerlink" title="5&gt;根据实际电脑操作系统下载压缩包"></a>5&gt;根据实际电脑操作系统下载压缩包</h4><p><img src="http://img.blog.csdn.net/20170802220918980?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuZzJxaW5n/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<h4 id="6-gt-把压缩包解压得到一个文件夹Apache24-当前把文件夹放到了C盘"><a href="#6-gt-把压缩包解压得到一个文件夹Apache24-当前把文件夹放到了C盘" class="headerlink" title="6&gt;把压缩包解压得到一个文件夹Apache24, 当前把文件夹放到了C盘"></a>6&gt;把压缩包解压得到一个文件夹<code>Apache24</code>, 当前把文件夹放到了<code>C</code>盘</h4><h3 id="二-安装Apache服务"><a href="#二-安装Apache服务" class="headerlink" title="二:安装Apache服务"></a><strong>二:安装Apache服务</strong></h3><h4 id="1-gt-命令提示符进到Apache24文件夹下的bin文件夹-执行命令启动Apache服务"><a href="#1-gt-命令提示符进到Apache24文件夹下的bin文件夹-执行命令启动Apache服务" class="headerlink" title="1&gt;命令提示符进到Apache24文件夹下的bin文件夹, 执行命令启动Apache服务"></a>1&gt;命令提示符进到<code>Apache24</code>文件夹下的<code>bin</code>文件夹, 执行命令启动Apache服务</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">httpd -k install</div></pre></td></tr></table></figure>
+</blockquote>
+<h5 id="附-重启服务命令-卸载命令-停止服务命令-启动命令"><a href="#附-重启服务命令-卸载命令-停止服务命令-启动命令" class="headerlink" title="附:重启服务命令 / 卸载命令 / 停止服务命令 / 启动命令"></a>附:重启服务命令 / 卸载命令 / 停止服务命令 / 启动命令</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">httpd -k restart  	//重启服务</div><div class="line">httpd -k uninstall  //卸载服务</div><div class="line">httpd -k stop  		//停止服务</div><div class="line">httpd -k start  	//停止服务</div></pre></td></tr></table></figure>
+<h4 id="1-1-gt-若出现Installing-the-39-Apache24-39-service-OS-5-拒绝访问-AH00369-Failed-to-open-the-WinNT-service-manager-quot"><a href="#1-1-gt-若出现Installing-the-39-Apache24-39-service-OS-5-拒绝访问-AH00369-Failed-to-open-the-WinNT-service-manager-quot" class="headerlink" title="1.1&gt;若出现Installing the &#39;Apache24&#39; service(OS 5)拒绝访问. :AH00369: Failed to open the WinNT service manager.&quot;"></a>1.1&gt;若出现<code>Installing the &#39;Apache24&#39; service(OS 5)拒绝访问. :AH00369: Failed to open the WinNT service manager.&quot;</code></h4><p><img src="http://img.blog.csdn.net/20170802221916811?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuZzJxaW5n/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<h4 id="1-1-gt-解决办法-以管理员身份运行cmd-exe"><a href="#1-1-gt-解决办法-以管理员身份运行cmd-exe" class="headerlink" title="1.1&gt;解决办法:以管理员身份运行cmd.exe"></a>1.1&gt;解决办法:以管理员身份运行<code>cmd.exe</code></h4><p><img src="http://img.blog.csdn.net/20170802222300910?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuZzJxaW5n/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<h4 id="1-2-gt-若出现Could-not-reliably-determine-the-server-39-s-fully-qualifi"><a href="#1-2-gt-若出现Could-not-reliably-determine-the-server-39-s-fully-qualifi" class="headerlink" title="1.2&gt;若出现Could not reliably determine the server&#39;s fully qualifi."></a>1.2&gt;若出现<code>Could not reliably determine the server&#39;s fully qualifi.</code></h4><p><img src="http://img.blog.csdn.net/20170802230508938?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuZzJxaW5n/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<h4 id="1-2解决办法-用记事本打开Apach24-gt-conf目录下的httpd-找到ServerName-www-example-com-80-去掉前面的-然后重启服务"><a href="#1-2解决办法-用记事本打开Apach24-gt-conf目录下的httpd-找到ServerName-www-example-com-80-去掉前面的-然后重启服务" class="headerlink" title="1.2解决办法: 用记事本打开Apach24 -&gt; conf目录下的httpd,找到ServerName www.example.com:80,去掉前面的#, 然后重启服务"></a>1.2解决办法: 用记事本打开Apach24 -&gt; conf目录下的<code>httpd</code>,找到<code>ServerName www.example.com:80</code>,去掉前面的<code>#</code>, 然后重启服务</h4><h4 id="1-3-gt-若出现Errors-reported-here-must-be-corrected-before-the-service-can-be-started"><a href="#1-3-gt-若出现Errors-reported-here-must-be-corrected-before-the-service-can-be-started" class="headerlink" title="1.3&gt;若出现Errors reported here must be corrected before the service can be started"></a>1.3&gt;若出现<code>Errors reported here must be corrected before the service can be started</code></h4><h4 id="1-3-gt-出现这句话不需要解决-这句话下面有error需要解决-这句话的意思是说如果这个位置出现错误的话需要在服务启动之前修复-只是一个提示而已"><a href="#1-3-gt-出现这句话不需要解决-这句话下面有error需要解决-这句话的意思是说如果这个位置出现错误的话需要在服务启动之前修复-只是一个提示而已" class="headerlink" title="1.3&gt;出现这句话不需要解决,这句话下面有error需要解决,这句话的意思是说如果这个位置出现错误的话需要在服务启动之前修复,只是一个提示而已."></a>1.3&gt;出现这句话不需要解决,这句话下面有<code>error</code>需要解决,这句话的意思是说<code>如果这个位置出现错误的话需要在服务启动之前修复</code>,只是一个提示而已.</h4><h4 id="2-gt-在管理员运行的cmd-exe中执行Apache服务启动命令-进到bin目录"><a href="#2-gt-在管理员运行的cmd-exe中执行Apache服务启动命令-进到bin目录" class="headerlink" title="2&gt;在管理员运行的cmd.exe中执行Apache服务启动命令(进到bin目录)"></a>2&gt;在管理员运行的<code>cmd.exe</code>中执行<code>Apache</code>服务启动命令(进到bin目录)</h4><p><img src="http://img.blog.csdn.net/20170802223112914?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuZzJxaW5n/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<h4 id="3-gt-启动Apache服务"><a href="#3-gt-启动Apache服务" class="headerlink" title="3&gt;启动Apache服务"></a>3&gt;启动Apache服务</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">httpd -k start</div></pre></td></tr></table></figure>
+<h4 id="3-1也可以双击Apache24-gt-bin-目录下的ApacheMonitor-exe-然后点击start"><a href="#3-1也可以双击Apache24-gt-bin-目录下的ApacheMonitor-exe-然后点击start" class="headerlink" title="3.1也可以双击Apache24 -&gt; bin 目录下的ApacheMonitor.exe, 然后点击start"></a>3.1也可以双击Apache24 -&gt; bin 目录下的<code>ApacheMonitor.exe</code>, 然后点击<code>start</code></h4><p><img src="http://img.blog.csdn.net/20170802224316795?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuZzJxaW5n/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<h3 id="三-验证Apache服务是否安装成功"><a href="#三-验证Apache服务是否安装成功" class="headerlink" title="三:验证Apache服务是否安装成功"></a><strong>三:验证Apache服务是否安装成功</strong></h3><h4 id="在浏览器地址栏键入127-0-0-1-出现"><a href="#在浏览器地址栏键入127-0-0-1-出现" class="headerlink" title="在浏览器地址栏键入127.0.0.1, 出现"></a>在浏览器地址栏键入<code>127.0.0.1</code>, 出现</h4><p><img src="http://img.blog.csdn.net/20170802224431243?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuZzJxaW5n/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<hr>
+<h2 id="基于Windows安装配置IIS服务"><a href="#基于Windows安装配置IIS服务" class="headerlink" title="基于Windows安装配置IIS服务"></a><strong>基于Windows安装配置IIS服务</strong></h2><h3 id="一-打开控制面板-gt-程序和功能-gt-启用或关闭Windows功能"><a href="#一-打开控制面板-gt-程序和功能-gt-启用或关闭Windows功能" class="headerlink" title="一:打开控制面板 -&gt; 程序和功能 -&gt; 启用或关闭Windows功能"></a><strong>一:打开控制面板 -&gt; 程序和功能 -&gt; 启用或关闭Windows功能</strong></h3><p><img src="http://img.blog.csdn.net/20170802233132646?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuZzJxaW5n/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>#<br><img src="http://img.blog.csdn.net/20170802233201998?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuZzJxaW5n/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<h3 id="二-勾选Internet-Information-Services-IIS-gt-点击确定"><a href="#二-勾选Internet-Information-Services-IIS-gt-点击确定" class="headerlink" title="二:勾选Internet Information Services(IIS) -&gt; 点击确定"></a><strong>二:勾选<code>Internet Information Services</code>(IIS) -&gt; 点击确定</strong></h3><p><img src="http://img.blog.csdn.net/20170802233242413?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuZzJxaW5n/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<h3 id="加载完成后关闭窗口"><a href="#加载完成后关闭窗口" class="headerlink" title="加载完成后关闭窗口"></a>加载完成后关闭窗口</h3><p><img src="http://img.blog.csdn.net/20170802233338663?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuZzJxaW5n/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<h3 id="此时在浏览器键入127-0-0-1-显示如下"><a href="#此时在浏览器键入127-0-0-1-显示如下" class="headerlink" title="此时在浏览器键入127.0.0.1,显示如下:"></a>此时在浏览器键入<code>127.0.0.1</code>,显示如下:</h3><p><img src="http://img.blog.csdn.net/20170802233408223?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuZzJxaW5n/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<h3 id="上面的操作会在C盘生成一个inetpub的文件夹-我们把需要展示网站代码文件放到该文件夹下的wwwroot-便可以使用IP访问网站-比如-127-0-0-1-index-html或者127-0-0-1-about-profile-html-再就是域名解析该IP实现域名访问"><a href="#上面的操作会在C盘生成一个inetpub的文件夹-我们把需要展示网站代码文件放到该文件夹下的wwwroot-便可以使用IP访问网站-比如-127-0-0-1-index-html或者127-0-0-1-about-profile-html-再就是域名解析该IP实现域名访问" class="headerlink" title="上面的操作会在C盘生成一个inetpub的文件夹, 我们把需要展示网站代码文件放到该文件夹下的wwwroot, 便可以使用IP访问网站,比如:127.0.0.1/index.html或者127.0.0.1/about/profile.html, 再就是域名解析该IP实现域名访问"></a>上面的操作会在C盘生成一个<code>inetpub</code>的文件夹, 我们把需要展示网站代码文件放到该文件夹下的<code>wwwroot</code>, 便可以使用<code>IP</code>访问网站,比如:<code>127.0.0.1/index.html</code>或者<code>127.0.0.1/about/profile.html</code>, 再就是域名解析该IP实现域名访问</h3><p><img src="http://img.blog.csdn.net/20170802233442146?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuZzJxaW5n/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<hr>
+<h2 id="Apache和IIS对比"><a href="#Apache和IIS对比" class="headerlink" title="Apache和IIS对比"></a><strong><code>Apache</code>和<code>IIS</code>对比</strong></h2><h4 id="IIS"><a href="#IIS" class="headerlink" title="IIS"></a><code>IIS</code></h4><ul>
+<li><code>IIS</code>在实际使用中经常出现500错误，而且有的时候还会出现莫名其妙的假死现象。用户需要不定期的重新启动<code>IIS</code>服务才能保证网站的正常。</li>
+<li>IIS只能在微软公司的<code>windows</code>操作系统下使用，无法移植到其他类型的操作系统中。</li>
+<li><code>IIS</code>是<code>windows</code>系统的一部分，所以他的源代码是没有开放的。</li>
+<li><code>IIS</code>操作起来比较简单，很容易就可能让<code>IIS</code>对外发布网站。开发人员很容易出现错误配置和误操作问题。不过总体说来<code>IIS</code>还是非常容易学的，但学好他恐怕是件非常困难的事。</li>
+</ul>
+<h4 id="Apache"><a href="#Apache" class="headerlink" title="Apache"></a><code>Apache</code></h4><ul>
+<li><code>Apache</code>在配置上比IIS要复杂，不过一经设置完毕就可以长期的工作了。大型网站都使用<code>Apache</code>作为自己的<code>WWW</code>服务提供工具。<code>Apache</code>的所有配置都保存在配置文件中，使用时完全按照配置文件中记录的信息执行。一般不会发生莫名其妙的假死情况。</li>
+<li><code>Apache</code>是个多面手，他不仅仅应用于<code>windows</code>，对于<code>unix</code>, <code>linux</code>以及<code>freebsd</code>等多种操作系统来说他都可以胜任工作。而且不同操作系统的配置步骤基本类似，可移植性非常高。</li>
+<li><code>Apache</code>最早他是为了类<code>unix</code>系统服务的，所以完全对外开放源代码。任何人都可以分析他的代码，发现其中的漏洞，并发布补丁来弥补该漏洞。正因为<code>Apache</code>的这种开放性，也使其安全性大大提高。</li>
+<li><code>Apache</code>的使用比<code>IIS</code>要难，需要有一定计算机及网络基础的人才可以使用。他的配置也不是图形化的，需要我们通过编辑配置文件来实现。但是单从<code>Apache</code>的设置上讲，只要我们严格按照帮助文件进行参数设置的话还是没有什么难度的。</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/qrcode.jpg" alt="Stevin wechat" style="width: 200px; max-width: 100%;"/>
+    <div>扫码及时获取更多文章</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/IIS/" rel="tag"># IIS</a>
+          
+            <a href="/tags/Apache/" rel="tag"># Apache</a>
+          
+            <a href="/tags/Web服务/" rel="tag"># Web服务</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/03/HTML-基础标签总结/" rel="next" title="HTML-基础标签总结">
+                <i class="fa fa-chevron-left"></i> HTML-基础标签总结
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://avatar.csdn.net/7/3/6/1_feng2qing.jpg"
+               alt="Stevin" />
+          <p class="site-author-name" itemprop="name">Stevin</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/1170197998" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.csdn.net/feng2qing?viewmode=list" target="_blank" title="CSDN博客">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  CSDN博客
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              联系我
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://wpa.qq.com/msgrd?v=3&uin=1170197998&site=qq&menu=yes" title="QQ" target="_blank">QQ</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://weibo.com/p/1005055558782565/home?from=page_100505&mod=TAB#place" title="WeiBo" target="_blank">WeiBo</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基于Windows安装配置Apache服务"><span class="nav-number">1.</span> <span class="nav-text">基于Windows安装配置Apache服务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一-在Apache官网下载Apache"><span class="nav-number">1.1.</span> <span class="nav-text">一:在Apache官网下载Apache</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-gt-点击download"><span class="nav-number">1.1.1.</span> <span class="nav-text">1>点击download!</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-gt-选择当前最新版本2-4-27"><span class="nav-number">1.1.2.</span> <span class="nav-text">2>选择当前最新版本2.4.27</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-gt-点击-File-for-Microsoft-Windows"><span class="nav-number">1.1.3.</span> <span class="nav-text">3>点击 File for Microsoft Windows</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-gt-这里面还有一些别的开发工具-这里选择Apache-Lounge"><span class="nav-number">1.1.4.</span> <span class="nav-text">4>这里面还有一些别的开发工具, 这里选择Apache Lounge</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-gt-根据实际电脑操作系统下载压缩包"><span class="nav-number">1.1.5.</span> <span class="nav-text">5>根据实际电脑操作系统下载压缩包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-gt-把压缩包解压得到一个文件夹Apache24-当前把文件夹放到了C盘"><span class="nav-number">1.1.6.</span> <span class="nav-text">6>把压缩包解压得到一个文件夹Apache24, 当前把文件夹放到了C盘</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二-安装Apache服务"><span class="nav-number">1.2.</span> <span class="nav-text">二:安装Apache服务</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-gt-命令提示符进到Apache24文件夹下的bin文件夹-执行命令启动Apache服务"><span class="nav-number">1.2.1.</span> <span class="nav-text">1>命令提示符进到Apache24文件夹下的bin文件夹, 执行命令启动Apache服务</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#附-重启服务命令-卸载命令-停止服务命令-启动命令"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">附:重启服务命令 / 卸载命令 / 停止服务命令 / 启动命令</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-gt-若出现Installing-the-39-Apache24-39-service-OS-5-拒绝访问-AH00369-Failed-to-open-the-WinNT-service-manager-quot"><span class="nav-number">1.2.2.</span> <span class="nav-text">1.1>若出现Installing the 'Apache24' service(OS 5)拒绝访问. :AH00369: Failed to open the WinNT service manager."</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-gt-解决办法-以管理员身份运行cmd-exe"><span class="nav-number">1.2.3.</span> <span class="nav-text">1.1>解决办法:以管理员身份运行cmd.exe</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-gt-若出现Could-not-reliably-determine-the-server-39-s-fully-qualifi"><span class="nav-number">1.2.4.</span> <span class="nav-text">1.2>若出现Could not reliably determine the server's fully qualifi.</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2解决办法-用记事本打开Apach24-gt-conf目录下的httpd-找到ServerName-www-example-com-80-去掉前面的-然后重启服务"><span class="nav-number">1.2.5.</span> <span class="nav-text">1.2解决办法: 用记事本打开Apach24 -> conf目录下的httpd,找到ServerName www.example.com:80,去掉前面的#, 然后重启服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-gt-若出现Errors-reported-here-must-be-corrected-before-the-service-can-be-started"><span class="nav-number">1.2.6.</span> <span class="nav-text">1.3>若出现Errors reported here must be corrected before the service can be started</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-gt-出现这句话不需要解决-这句话下面有error需要解决-这句话的意思是说如果这个位置出现错误的话需要在服务启动之前修复-只是一个提示而已"><span class="nav-number">1.2.7.</span> <span class="nav-text">1.3>出现这句话不需要解决,这句话下面有error需要解决,这句话的意思是说如果这个位置出现错误的话需要在服务启动之前修复,只是一个提示而已.</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-gt-在管理员运行的cmd-exe中执行Apache服务启动命令-进到bin目录"><span class="nav-number">1.2.8.</span> <span class="nav-text">2>在管理员运行的cmd.exe中执行Apache服务启动命令(进到bin目录)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-gt-启动Apache服务"><span class="nav-number">1.2.9.</span> <span class="nav-text">3>启动Apache服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1也可以双击Apache24-gt-bin-目录下的ApacheMonitor-exe-然后点击start"><span class="nav-number">1.2.10.</span> <span class="nav-text">3.1也可以双击Apache24 -> bin 目录下的ApacheMonitor.exe, 然后点击start</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三-验证Apache服务是否安装成功"><span class="nav-number">1.3.</span> <span class="nav-text">三:验证Apache服务是否安装成功</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#在浏览器地址栏键入127-0-0-1-出现"><span class="nav-number">1.3.1.</span> <span class="nav-text">在浏览器地址栏键入127.0.0.1, 出现</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基于Windows安装配置IIS服务"><span class="nav-number">2.</span> <span class="nav-text">基于Windows安装配置IIS服务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一-打开控制面板-gt-程序和功能-gt-启用或关闭Windows功能"><span class="nav-number">2.1.</span> <span class="nav-text">一:打开控制面板 -> 程序和功能 -> 启用或关闭Windows功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二-勾选Internet-Information-Services-IIS-gt-点击确定"><span class="nav-number">2.2.</span> <span class="nav-text">二:勾选Internet Information Services(IIS) -> 点击确定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#加载完成后关闭窗口"><span class="nav-number">2.3.</span> <span class="nav-text">加载完成后关闭窗口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#此时在浏览器键入127-0-0-1-显示如下"><span class="nav-number">2.4.</span> <span class="nav-text">此时在浏览器键入127.0.0.1,显示如下:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#上面的操作会在C盘生成一个inetpub的文件夹-我们把需要展示网站代码文件放到该文件夹下的wwwroot-便可以使用IP访问网站-比如-127-0-0-1-index-html或者127-0-0-1-about-profile-html-再就是域名解析该IP实现域名访问"><span class="nav-number">2.5.</span> <span class="nav-text">上面的操作会在C盘生成一个inetpub的文件夹, 我们把需要展示网站代码文件放到该文件夹下的wwwroot, 便可以使用IP访问网站,比如:127.0.0.1/index.html或者127.0.0.1/about/profile.html, 再就是域名解析该IP实现域名访问</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Apache和IIS对比"><span class="nav-number">3.</span> <span class="nav-text">Apache和IIS对比</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#IIS"><span class="nav-number">3.0.1.</span> <span class="nav-text">IIS</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Apache"><span class="nav-number">3.0.2.</span> <span class="nav-text">Apache</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Stevin</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+    <script>
+      var cloudTieConfig = {
+        url: document.location.href, 
+        sourceId: "",
+        productKey: "50afed8cf0d542a0a1d3809b7def653f",
+        target: "cloud-tie-wrapper"
+      };
+    </script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
