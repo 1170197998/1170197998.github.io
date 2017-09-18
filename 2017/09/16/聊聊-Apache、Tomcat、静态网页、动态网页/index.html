@@ -1,0 +1,1180 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Web服务,Apache,Tomcat," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="Apache &amp;amp; TomcatApache1、C语言实现的，专门用来提供HTTP服务。2、特性：简单、速度快、性能稳定、可配置（代理），主要用于解析静态文本，并发性能高，侧重于HTTP服务；3、支持静态页（HTML），不支持动态请求如：CGI、Servlet/JSP、PHP、ASP等；4、具有很强的可扩展性，可以通过插件支持PHP，还可以单向Apache连接Tomcat实现连通。Apach">
+<meta name="keywords" content="Web服务,Apache,Tomcat">
+<meta property="og:type" content="article">
+<meta property="og:title" content="聊聊 Apache、Tomcat &amp;&amp; 静态网页、动态网页">
+<meta property="og:url" content="http://www.stevin3t3y.site/2017/09/16/聊聊-Apache、Tomcat、静态网页、动态网页/index.html">
+<meta property="og:site_name" content="Stevin三天三夜">
+<meta property="og:description" content="Apache &amp;amp; TomcatApache1、C语言实现的，专门用来提供HTTP服务。2、特性：简单、速度快、性能稳定、可配置（代理），主要用于解析静态文本，并发性能高，侧重于HTTP服务；3、支持静态页（HTML），不支持动态请求如：CGI、Servlet/JSP、PHP、ASP等；4、具有很强的可扩展性，可以通过插件支持PHP，还可以单向Apache连接Tomcat实现连通。Apach">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/1035591/201610/1035591-20161013090832625-143100190.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/1035591/201610/1035591-20161013090850453-1606322464.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/1035591/201610/1035591-20161013091000593-2083168051.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/1035591/201610/1035591-20161013091027687-1036668626.png">
+<meta property="og:updated_time" content="2017-09-16T07:31:37.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="聊聊 Apache、Tomcat &amp;&amp; 静态网页、动态网页">
+<meta name="twitter:description" content="Apache &amp;amp; TomcatApache1、C语言实现的，专门用来提供HTTP服务。2、特性：简单、速度快、性能稳定、可配置（代理），主要用于解析静态文本，并发性能高，侧重于HTTP服务；3、支持静态页（HTML），不支持动态请求如：CGI、Servlet/JSP、PHP、ASP等；4、具有很强的可扩展性，可以通过插件支持PHP，还可以单向Apache连接Tomcat实现连通。Apach">
+<meta name="twitter:image" content="http://images2015.cnblogs.com/blog/1035591/201610/1035591-20161013090832625-143100190.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.stevin3t3y.site/2017/09/16/聊聊-Apache、Tomcat、静态网页、动态网页/"/>
+
+
+
+
+
+  <title>聊聊 Apache、Tomcat && 静态网页、动态网页 | Stevin三天三夜</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?238c6206dc082cd80edc5a30178f5554";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Stevin三天三夜</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">共分享，共进步</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.stevin3t3y.site/2017/09/16/聊聊-Apache、Tomcat、静态网页、动态网页/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Stevin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://avatar.csdn.net/7/3/6/1_feng2qing.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Stevin三天三夜">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">聊聊 Apache、Tomcat && 静态网页、动态网页</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-16T15:16:27+08:00">
+                2017-09-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/server/" itemprop="url" rel="index">
+                    <span itemprop="name">server</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a class="cloud-tie-join-count" href="/2017/09/16/聊聊-Apache、Tomcat、静态网页、动态网页/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count join-count" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Apache-amp-Tomcat"><a href="#Apache-amp-Tomcat" class="headerlink" title="Apache &amp; Tomcat"></a><strong>Apache &amp; Tomcat</strong></h2><h3 id="Apache"><a href="#Apache" class="headerlink" title="Apache"></a><strong>Apache</strong></h3><h4 id="1、C语言实现的，专门用来提供HTTP服务。"><a href="#1、C语言实现的，专门用来提供HTTP服务。" class="headerlink" title="1、C语言实现的，专门用来提供HTTP服务。"></a>1、C语言实现的，专门用来提供HTTP服务。</h4><h4 id="2、特性：简单、速度快、性能稳定、可配置（代理），主要用于解析静态文本，并发性能高，侧重于HTTP服务；"><a href="#2、特性：简单、速度快、性能稳定、可配置（代理），主要用于解析静态文本，并发性能高，侧重于HTTP服务；" class="headerlink" title="2、特性：简单、速度快、性能稳定、可配置（代理），主要用于解析静态文本，并发性能高，侧重于HTTP服务；"></a>2、特性：简单、速度快、性能稳定、可配置（代理），主要用于解析静态文本，并发性能高，侧重于HTTP服务；</h4><h4 id="3、支持静态页（HTML），不支持动态请求如：CGI、Servlet-JSP、PHP、ASP等；"><a href="#3、支持静态页（HTML），不支持动态请求如：CGI、Servlet-JSP、PHP、ASP等；" class="headerlink" title="3、支持静态页（HTML），不支持动态请求如：CGI、Servlet/JSP、PHP、ASP等；"></a>3、支持静态页（HTML），不支持动态请求如：CGI、Servlet/JSP、PHP、ASP等；</h4><h4 id="4、具有很强的可扩展性，可以通过插件支持PHP，还可以单向Apache连接Tomcat实现连通。Apache是世界使用排名第一的Web服务器。"><a href="#4、具有很强的可扩展性，可以通过插件支持PHP，还可以单向Apache连接Tomcat实现连通。Apache是世界使用排名第一的Web服务器。" class="headerlink" title="4、具有很强的可扩展性，可以通过插件支持PHP，还可以单向Apache连接Tomcat实现连通。Apache是世界使用排名第一的Web服务器。"></a>4、具有很强的可扩展性，可以通过插件支持PHP，还可以单向Apache连接Tomcat实现连通。Apache是世界使用排名第一的Web服务器。</h4><h3 id="Tomcat"><a href="#Tomcat" class="headerlink" title="Tomcat"></a><strong>Tomcat</strong></h3><h4 id="1、是Java开发的一个符合JavaEE的Servlet规范的JSP服务器（Servlet容器），是-Apache-的扩展。免费的Java应用服务器"><a href="#1、是Java开发的一个符合JavaEE的Servlet规范的JSP服务器（Servlet容器），是-Apache-的扩展。免费的Java应用服务器" class="headerlink" title="1、是Java开发的一个符合JavaEE的Servlet规范的JSP服务器（Servlet容器），是 Apache 的扩展。免费的Java应用服务器"></a>1、是Java开发的一个符合JavaEE的Servlet规范的JSP服务器（Servlet容器），是 Apache 的扩展。免费的Java应用服务器</h4><a id="more"></a>
+<h4 id="2、主要用于解析JSP-Servlet，侧重于Servlet引擎；"><a href="#2、主要用于解析JSP-Servlet，侧重于Servlet引擎；" class="headerlink" title="2、主要用于解析JSP/Servlet，侧重于Servlet引擎；"></a>2、主要用于解析JSP/Servlet，侧重于Servlet引擎；</h4><h4 id="3、支持静态页，但效率没有Apache高；支持Servlet、JSP请求；"><a href="#3、支持静态页，但效率没有Apache高；支持Servlet、JSP请求；" class="headerlink" title="3、支持静态页，但效率没有Apache高；支持Servlet、JSP请求；"></a>3、支持静态页，但效率没有Apache高；支持Servlet、JSP请求；</h4><h4 id="4、Tomcat本身也内置了一个HTTP服务器用于支持静态内容，可以通过Tomcat的配置管理工具实现与Apache整合。"><a href="#4、Tomcat本身也内置了一个HTTP服务器用于支持静态内容，可以通过Tomcat的配置管理工具实现与Apache整合。" class="headerlink" title="4、Tomcat本身也内置了一个HTTP服务器用于支持静态内容，可以通过Tomcat的配置管理工具实现与Apache整合。"></a>4、Tomcat本身也内置了一个HTTP服务器用于支持静态内容，可以通过Tomcat的配置管理工具实现与Apache整合。</h4><h3 id="Apache-Tomcat：两者整合使用的优点："><a href="#Apache-Tomcat：两者整合使用的优点：" class="headerlink" title="Apache + Tomcat：两者整合使用的优点："></a><strong>Apache + Tomcat：两者整合使用的优点：</strong></h3><h4 id="如果请求是静态网页则由Apache处理，并将结果返回；如果是动态请求，Apache会将解析工作转发给Tomcat处理，Tomcat处理后将结果通过Apache返回。这样可以达到分工合作，实现负载远衡，提高系统的性能。"><a href="#如果请求是静态网页则由Apache处理，并将结果返回；如果是动态请求，Apache会将解析工作转发给Tomcat处理，Tomcat处理后将结果通过Apache返回。这样可以达到分工合作，实现负载远衡，提高系统的性能。" class="headerlink" title="如果请求是静态网页则由Apache处理，并将结果返回；如果是动态请求，Apache会将解析工作转发给Tomcat处理，Tomcat处理后将结果通过Apache返回。这样可以达到分工合作，实现负载远衡，提高系统的性能。"></a>如果请求是静态网页则由Apache处理，并将结果返回；如果是动态请求，Apache会将解析工作转发给Tomcat处理，Tomcat处理后将结果通过Apache返回。这样可以达到分工合作，实现负载远衡，提高系统的性能。</h4><h4 id="Apache是一个web服务器环境程序，可以作为web服务器使用。不过只支持静态网页，如-asp-php-cgi-jsp-等动态网页的就显得无能为力。如果要在Apache环境下运行jsp的话就需要一个解释器来执行jsp网页，而这个jsp解释器就是Tomcat-还需要jdk，jsp需要连接数据库的话，就要jdk来提供连接数据库的驱程，所以要运行jsp的动态web服务器平台就需要Apache-tomcat-jdk。"><a href="#Apache是一个web服务器环境程序，可以作为web服务器使用。不过只支持静态网页，如-asp-php-cgi-jsp-等动态网页的就显得无能为力。如果要在Apache环境下运行jsp的话就需要一个解释器来执行jsp网页，而这个jsp解释器就是Tomcat-还需要jdk，jsp需要连接数据库的话，就要jdk来提供连接数据库的驱程，所以要运行jsp的动态web服务器平台就需要Apache-tomcat-jdk。" class="headerlink" title="Apache是一个web服务器环境程序，可以作为web服务器使用。不过只支持静态网页，如(asp,php,cgi,jsp)等动态网页的就显得无能为力。如果要在Apache环境下运行jsp的话就需要一个解释器来执行jsp网页，而这个jsp解释器就是Tomcat, 还需要jdk，jsp需要连接数据库的话，就要jdk来提供连接数据库的驱程，所以要运行jsp的动态web服务器平台就需要Apache+tomcat+jdk。"></a>Apache是一个web服务器环境程序，可以作为web服务器使用。不过只支持静态网页，如(asp,php,cgi,jsp)等动态网页的就显得无能为力。如果要在Apache环境下运行jsp的话就需要一个解释器来执行jsp网页，而这个jsp解释器就是Tomcat, 还需要jdk，jsp需要连接数据库的话，就要jdk来提供连接数据库的驱程，所以要运行jsp的动态web服务器平台就需要Apache+tomcat+jdk。</h4><hr>
+<h2 id="静态网页-amp-动态网页"><a href="#静态网页-amp-动态网页" class="headerlink" title="静态网页 &amp; 动态网页"></a><strong>静态网页 &amp; 动态网页</strong></h2><h3 id="静态网页："><a href="#静态网页：" class="headerlink" title="静态网页："></a><strong>静态网页：</strong></h3><h4 id="1、在静态Web程序中，客户端使用Web浏览器（IE、FireFox等）经过网络-Network-连接到服务器上，使用HTTP协议发起一个请求（Request），告诉服务器我现在需要得到哪个页面，所有的请求交给Web服务器，之后WEB服务器根据用户的需要，从文件系统（存放了所有静态页面的磁盘）取出内容。之后通过Web服务器返回给客户端，客户端接收到内容之后经过浏览器渲染解析，得到显示的效果。"><a href="#1、在静态Web程序中，客户端使用Web浏览器（IE、FireFox等）经过网络-Network-连接到服务器上，使用HTTP协议发起一个请求（Request），告诉服务器我现在需要得到哪个页面，所有的请求交给Web服务器，之后WEB服务器根据用户的需要，从文件系统（存放了所有静态页面的磁盘）取出内容。之后通过Web服务器返回给客户端，客户端接收到内容之后经过浏览器渲染解析，得到显示的效果。" class="headerlink" title="1、在静态Web程序中，客户端使用Web浏览器（IE、FireFox等）经过网络(Network)连接到服务器上，使用HTTP协议发起一个请求（Request），告诉服务器我现在需要得到哪个页面，所有的请求交给Web服务器，之后WEB服务器根据用户的需要，从文件系统（存放了所有静态页面的磁盘）取出内容。之后通过Web服务器返回给客户端，客户端接收到内容之后经过浏览器渲染解析，得到显示的效果。"></a>1、在静态Web程序中，客户端使用Web浏览器（IE、FireFox等）经过网络(Network)连接到服务器上，使用HTTP协议发起一个请求（Request），告诉服务器我现在需要得到哪个页面，所有的请求交给Web服务器，之后WEB服务器根据用户的需要，从文件系统（存放了所有静态页面的磁盘）取出内容。之后通过Web服务器返回给客户端，客户端接收到内容之后经过浏览器渲染解析，得到显示的效果。</h4><h4 id="2、为了让静态页面显示更加好看，使用javascript／VBScript／ajax（AJAX即“Asynchronous-Javascript-And-XML”（异步JavaScript和XML），是指一种创建交互式网页应用的网页开发技术。）但是这些特效都是在客户端上借助于浏览器展现给用户的，所以在服务器上本身并没有任何的变化。"><a href="#2、为了让静态页面显示更加好看，使用javascript／VBScript／ajax（AJAX即“Asynchronous-Javascript-And-XML”（异步JavaScript和XML），是指一种创建交互式网页应用的网页开发技术。）但是这些特效都是在客户端上借助于浏览器展现给用户的，所以在服务器上本身并没有任何的变化。" class="headerlink" title="2、为了让静态页面显示更加好看，使用javascript／VBScript／ajax（AJAX即“Asynchronous Javascript And XML”（异步JavaScript和XML），是指一种创建交互式网页应用的网页开发技术。）但是这些特效都是在客户端上借助于浏览器展现给用户的，所以在服务器上本身并没有任何的变化。"></a>2、为了让静态页面显示更加好看，使用javascript／VBScript／ajax（AJAX即“Asynchronous Javascript And XML”（异步JavaScript和XML），是指一种创建交互式网页应用的网页开发技术。）但是这些特效都是在客户端上借助于浏览器展现给用户的，所以在服务器上本身并没有任何的变化。</h4><h4 id="3、静态页面无法连接数据库；"><a href="#3、静态页面无法连接数据库；" class="headerlink" title="3、静态页面无法连接数据库；"></a>3、静态页面无法连接数据库；</h4><h4 id="4、由于现在的web页面中，大量使用JS，导致浏览器打开页面，就会占用大量的内存，服务端的压力是减轻了，但压力转移到了客户端。"><a href="#4、由于现在的web页面中，大量使用JS，导致浏览器打开页面，就会占用大量的内存，服务端的压力是减轻了，但压力转移到了客户端。" class="headerlink" title="4、由于现在的web页面中，大量使用JS，导致浏览器打开页面，就会占用大量的内存，服务端的压力是减轻了，但压力转移到了客户端。"></a>4、由于现在的web页面中，大量使用JS，导致浏览器打开页面，就会占用大量的内存，服务端的压力是减轻了，但压力转移到了客户端。</h4><h4 id="5、运行在客户端的程序、网页、插件、组件，属于静态网页，例如：html，javascript等等，他们可以脱离服务器运行于浏览器客户端。"><a href="#5、运行在客户端的程序、网页、插件、组件，属于静态网页，例如：html，javascript等等，他们可以脱离服务器运行于浏览器客户端。" class="headerlink" title="5、运行在客户端的程序、网页、插件、组件，属于静态网页，例如：html，javascript等等，他们可以脱离服务器运行于浏览器客户端。"></a>5、运行在客户端的程序、网页、插件、组件，属于静态网页，例如：html，javascript等等，他们可以脱离服务器运行于浏览器客户端。</h4><h4 id="6：静态网页的内容相对稳定，URL地址相对于动态网页的更加容易被搜索引擎识别-所以网站进行SEO优化的时候一般都是建议采用静态网页。"><a href="#6：静态网页的内容相对稳定，URL地址相对于动态网页的更加容易被搜索引擎识别-所以网站进行SEO优化的时候一般都是建议采用静态网页。" class="headerlink" title="6：静态网页的内容相对稳定，URL地址相对于动态网页的更加容易被搜索引擎识别,所以网站进行SEO优化的时候一般都是建议采用静态网页。"></a>6：静态网页的内容相对稳定，URL地址相对于动态网页的更加容易被搜索引擎识别,所以网站进行SEO优化的时候一般都是建议采用静态网页。</h4><h4 id="7：静态网页无需数据库的支持，所以访问速度上较之动态网页比较快，不过随着浏览器以及宽带速度提升，这种差别会越来越小。"><a href="#7：静态网页无需数据库的支持，所以访问速度上较之动态网页比较快，不过随着浏览器以及宽带速度提升，这种差别会越来越小。" class="headerlink" title="7：静态网页无需数据库的支持，所以访问速度上较之动态网页比较快，不过随着浏览器以及宽带速度提升，这种差别会越来越小。"></a>7：静态网页无需数据库的支持，所以访问速度上较之动态网页比较快，不过随着浏览器以及宽带速度提升，这种差别会越来越小。</h4><h3 id="动态网页："><a href="#动态网页：" class="headerlink" title="动态网页："></a><strong>动态网页：</strong></h3><h4 id="1、动态WEB中，程序依然使用客户端和服务端，客户端依然使用浏览器（IE、FireFox等），通过网络-Network-连接到服务器上，使用HTTP协议发起请求（Request），现在的所有请求都先经过一个WEB-Server来处理。"><a href="#1、动态WEB中，程序依然使用客户端和服务端，客户端依然使用浏览器（IE、FireFox等），通过网络-Network-连接到服务器上，使用HTTP协议发起请求（Request），现在的所有请求都先经过一个WEB-Server来处理。" class="headerlink" title="1、动态WEB中，程序依然使用客户端和服务端，客户端依然使用浏览器（IE、FireFox等），通过网络(Network)连接到服务器上，使用HTTP协议发起请求（Request），现在的所有请求都先经过一个WEB Server来处理。"></a>1、动态WEB中，程序依然使用客户端和服务端，客户端依然使用浏览器（IE、FireFox等），通过网络(Network)连接到服务器上，使用HTTP协议发起请求（Request），现在的所有请求都先经过一个WEB Server来处理。</h4><h4 id="2、如果客户端请求的是静态资源-htm或者是-htm-，则将请求直接转交给WEB服务器，之后WEB服务器从文件系统中取出内容，发送回客户端浏览器进行解析执行。"><a href="#2、如果客户端请求的是静态资源-htm或者是-htm-，则将请求直接转交给WEB服务器，之后WEB服务器从文件系统中取出内容，发送回客户端浏览器进行解析执行。" class="headerlink" title="2、如果客户端请求的是静态资源(.htm或者是.htm)，则将请求直接转交给WEB服务器，之后WEB服务器从文件系统中取出内容，发送回客户端浏览器进行解析执行。"></a>2、如果客户端请求的是静态资源(<em>.htm或者是</em>.htm)，则将请求直接转交给WEB服务器，之后WEB服务器从文件系统中取出内容，发送回客户端浏览器进行解析执行。</h4><p><img src="http://images2015.cnblogs.com/blog/1035591/201610/1035591-20161013090832625-143100190.png" alt=""></p>
+<h4 id="3、常用动态web资源开发技术：JSP-Servlet、ASP、PHP等。如果客户端请求的是动态资源（-jsp、-asp-aspx、-php），则先将请求转交给WEB-Container-WEB容器-，在WEB-Container中连接数据库，从数据库中取出数据等一系列操作后动态拼凑页面的展示内容，拼凑页面的展示内容后，把所有的展示内容交给WEB服务器，之后通过WEB服务器将内容发送回客户端浏览器进行解析执行。"><a href="#3、常用动态web资源开发技术：JSP-Servlet、ASP、PHP等。如果客户端请求的是动态资源（-jsp、-asp-aspx、-php），则先将请求转交给WEB-Container-WEB容器-，在WEB-Container中连接数据库，从数据库中取出数据等一系列操作后动态拼凑页面的展示内容，拼凑页面的展示内容后，把所有的展示内容交给WEB服务器，之后通过WEB服务器将内容发送回客户端浏览器进行解析执行。" class="headerlink" title="3、常用动态web资源开发技术：JSP/Servlet、ASP、PHP等。如果客户端请求的是动态资源（.jsp、.asp/.aspx、.php），则先将请求转交给WEB Container(WEB容器)，在WEB Container中连接数据库，从数据库中取出数据等一系列操作后动态拼凑页面的展示内容，拼凑页面的展示内容后，把所有的展示内容交给WEB服务器，之后通过WEB服务器将内容发送回客户端浏览器进行解析执行。"></a>3、常用动态web资源开发技术：JSP/Servlet、ASP、PHP等。如果客户端请求的是动态资源（<em>.jsp、</em>.asp/<em>.aspx、</em>.php），则先将请求转交给WEB Container(WEB容器)，在WEB Container中连接数据库，从数据库中取出数据等一系列操作后动态拼凑页面的展示内容，拼凑页面的展示内容后，把所有的展示内容交给WEB服务器，之后通过WEB服务器将内容发送回客户端浏览器进行解析执行。</h4><h4 id="4、再进一步深入分析动态web的访问过程：浏览器访问web时，看似是直接访问的jsp页面，其实是，最先到达的地方是服务器，服务器创建好req和resp对象后再给jsp页面使用。JSP的前身是servlet；在jsp中完成设置字符集和取得表单参数后再调用servlet，完成业务处理。然后返回到jsp，jsp就会生成相应的html页面。该页面会返回到服务器，再由服务器，通过response对象返回给客户端。"><a href="#4、再进一步深入分析动态web的访问过程：浏览器访问web时，看似是直接访问的jsp页面，其实是，最先到达的地方是服务器，服务器创建好req和resp对象后再给jsp页面使用。JSP的前身是servlet；在jsp中完成设置字符集和取得表单参数后再调用servlet，完成业务处理。然后返回到jsp，jsp就会生成相应的html页面。该页面会返回到服务器，再由服务器，通过response对象返回给客户端。" class="headerlink" title="4、再进一步深入分析动态web的访问过程：浏览器访问web时，看似是直接访问的jsp页面，其实是，最先到达的地方是服务器，服务器创建好req和resp对象后再给jsp页面使用。JSP的前身是servlet；在jsp中完成设置字符集和取得表单参数后再调用servlet，完成业务处理。然后返回到jsp，jsp就会生成相应的html页面。该页面会返回到服务器，再由服务器，通过response对象返回给客户端。"></a>4、再进一步深入分析动态web的访问过程：浏览器访问web时，看似是直接访问的jsp页面，其实是，最先到达的地方是服务器，服务器创建好req和resp对象后再给jsp页面使用。JSP的前身是servlet；在jsp中完成设置字符集和取得表单参数后再调用servlet，完成业务处理。然后返回到jsp，jsp就会生成相应的html页面。该页面会返回到服务器，再由服务器，通过response对象返回给客户端。</h4><p><img src="http://images2015.cnblogs.com/blog/1035591/201610/1035591-20161013090850453-1606322464.png" alt=""></p>
+<h4 id="5、运行在服务器端的程序、网页、组件，属于动态网页，例如：JSP-ASP-PHP等，它们会随不同客户、不同时间，返回不同的网页。"><a href="#5、运行在服务器端的程序、网页、组件，属于动态网页，例如：JSP-ASP-PHP等，它们会随不同客户、不同时间，返回不同的网页。" class="headerlink" title="5、运行在服务器端的程序、网页、组件，属于动态网页，例如：JSP,ASP,PHP等，它们会随不同客户、不同时间，返回不同的网页。"></a>5、运行在服务器端的程序、网页、组件，属于动态网页，例如：JSP,ASP,PHP等，它们会随不同客户、不同时间，返回不同的网页。</h4><h4 id="6、为什么需要web服务器？-web-server"><a href="#6、为什么需要web服务器？-web-server" class="headerlink" title="6、为什么需要web服务器？(web server)"></a>6、为什么需要web服务器？(web server)</h4><h5 id="1）不管什么web资源，想被远程计算机访问，都必须有一个与之对应的网络通信程序，当用户来访问时，这个网络通信程序读取web资源数据，并把数据发送给来访者。"><a href="#1）不管什么web资源，想被远程计算机访问，都必须有一个与之对应的网络通信程序，当用户来访问时，这个网络通信程序读取web资源数据，并把数据发送给来访者。" class="headerlink" title="1）不管什么web资源，想被远程计算机访问，都必须有一个与之对应的网络通信程序，当用户来访问时，这个网络通信程序读取web资源数据，并把数据发送给来访者。"></a>1）不管什么web资源，想被远程计算机访问，都必须有一个与之对应的网络通信程序，当用户来访问时，这个网络通信程序读取web资源数据，并把数据发送给来访者。</h5><h5 id="2）WEB服务器就是这样一个程序，它用于完成底层网络通迅，处理http协议。使用这些服务器，We应用的开发者只需要关注web资源怎么编写，而不需要关心资源如何发送到客户端手中，从而极大的减轻了开发者的开发工作量。"><a href="#2）WEB服务器就是这样一个程序，它用于完成底层网络通迅，处理http协议。使用这些服务器，We应用的开发者只需要关注web资源怎么编写，而不需要关心资源如何发送到客户端手中，从而极大的减轻了开发者的开发工作量。" class="headerlink" title="2）WEB服务器就是这样一个程序，它用于完成底层网络通迅，处理http协议。使用这些服务器，We应用的开发者只需要关注web资源怎么编写，而不需要关心资源如何发送到客户端手中，从而极大的减轻了开发者的开发工作量。"></a>2）WEB服务器就是这样一个程序，它用于完成底层网络通迅，处理http协议。使用这些服务器，We应用的开发者只需要关注web资源怎么编写，而不需要关心资源如何发送到客户端手中，从而极大的减轻了开发者的开发工作量。</h5><h3 id="静态网页和动态网页区别的简单描述"><a href="#静态网页和动态网页区别的简单描述" class="headerlink" title="静态网页和动态网页区别的简单描述"></a><strong>静态网页和动态网页区别的简单描述</strong></h3><h4 id="1、静态页面就是设计者把页面上所有东西都设定好、做死了，然后放上去，不管是谁在任何时候看到的页面内容都是一样的，一成不变（除非手动修改页面内容）。运行于客户端的程序、网页、插件、组件，属于静态网页，例如html页、Flash、JavaScript、VBScript等等，它们是永远不变的。静态html页面文件，可以直接用本地的浏览器打开。比如：file-Users-Phil-Documents-DevOps-HBuilderProjects-testJSP-index-html。静态页面放到什么地方都能运行的。动态页面则不行。"><a href="#1、静态页面就是设计者把页面上所有东西都设定好、做死了，然后放上去，不管是谁在任何时候看到的页面内容都是一样的，一成不变（除非手动修改页面内容）。运行于客户端的程序、网页、插件、组件，属于静态网页，例如html页、Flash、JavaScript、VBScript等等，它们是永远不变的。静态html页面文件，可以直接用本地的浏览器打开。比如：file-Users-Phil-Documents-DevOps-HBuilderProjects-testJSP-index-html。静态页面放到什么地方都能运行的。动态页面则不行。" class="headerlink" title="1、静态页面就是设计者把页面上所有东西都设定好、做死了，然后放上去，不管是谁在任何时候看到的页面内容都是一样的，一成不变（除非手动修改页面内容）。运行于客户端的程序、网页、插件、组件，属于静态网页，例如html页、Flash、JavaScript、VBScript等等，它们是永远不变的。静态html页面文件，可以直接用本地的浏览器打开。比如：file:///Users/Phil/Documents/DevOps/HBuilderProjects/testJSP/index.html。静态页面放到什么地方都能运行的。动态页面则不行。"></a>1、静态页面就是设计者把页面上所有东西都设定好、做死了，然后放上去，不管是谁在任何时候看到的页面内容都是一样的，一成不变（除非手动修改页面内容）。运行于客户端的程序、网页、插件、组件，属于静态网页，例如html页、Flash、JavaScript、VBScript等等，它们是永远不变的。静态html页面文件，可以直接用本地的浏览器打开。比如：file:///Users/Phil/Documents/DevOps/HBuilderProjects/testJSP/index.html。静态页面放到什么地方都能运行的。动态页面则不行。</h4><h4 id="2、程序是否在服务器端运行，这个是判断网页属不属于动态网页的重要标志。动态页面是需要服务器解释的。动态页面的内容一般都是依靠服务器端的程序来生成的，不同人、不同时候访问页面，显示的内容都可能不同。网页设计者在写好服务器端的页面程序后，不需要手工控制，页面内容会按照页面程序的安排自动更改变换。在服务器端运行的程序、网页、组件，属于动态网页，它们会随不同客户、不同时间，返回不同的网页，例如ASP、PHP、JSP、ASP-net、CGI等。"><a href="#2、程序是否在服务器端运行，这个是判断网页属不属于动态网页的重要标志。动态页面是需要服务器解释的。动态页面的内容一般都是依靠服务器端的程序来生成的，不同人、不同时候访问页面，显示的内容都可能不同。网页设计者在写好服务器端的页面程序后，不需要手工控制，页面内容会按照页面程序的安排自动更改变换。在服务器端运行的程序、网页、组件，属于动态网页，它们会随不同客户、不同时间，返回不同的网页，例如ASP、PHP、JSP、ASP-net、CGI等。" class="headerlink" title="2、程序是否在服务器端运行，这个是判断网页属不属于动态网页的重要标志。动态页面是需要服务器解释的。动态页面的内容一般都是依靠服务器端的程序来生成的，不同人、不同时候访问页面，显示的内容都可能不同。网页设计者在写好服务器端的页面程序后，不需要手工控制，页面内容会按照页面程序的安排自动更改变换。在服务器端运行的程序、网页、组件，属于动态网页，它们会随不同客户、不同时间，返回不同的网页，例如ASP、PHP、JSP、ASP.net、CGI等。"></a>2、程序是否在服务器端运行，这个是判断网页属不属于动态网页的重要标志。动态页面是需要服务器解释的。动态页面的内容一般都是依靠服务器端的程序来生成的，不同人、不同时候访问页面，显示的内容都可能不同。网页设计者在写好服务器端的页面程序后，不需要手工控制，页面内容会按照页面程序的安排自动更改变换。在服务器端运行的程序、网页、组件，属于动态网页，它们会随不同客户、不同时间，返回不同的网页，例如ASP、PHP、JSP、ASP.net、CGI等。</h4><h4 id="3、动态网页相比静态网页的交互性更高，可以实现更多的功能，如用户注册、登录等一系列用户需要与网站发生互动的功能基本都需要由动态网页来满足。动态网页，与网页上的各种动画、滚动字幕等视觉上的“动态效果”没有直接关系，动态网页也可以是纯文字内容的，也可以是包含各种动画的内容，这些只是网页具体内容的表现形式，无论网页是否具有动态效果，采用动态网站技术生成的网页都称为动态网页"><a href="#3、动态网页相比静态网页的交互性更高，可以实现更多的功能，如用户注册、登录等一系列用户需要与网站发生互动的功能基本都需要由动态网页来满足。动态网页，与网页上的各种动画、滚动字幕等视觉上的“动态效果”没有直接关系，动态网页也可以是纯文字内容的，也可以是包含各种动画的内容，这些只是网页具体内容的表现形式，无论网页是否具有动态效果，采用动态网站技术生成的网页都称为动态网页" class="headerlink" title="3、动态网页相比静态网页的交互性更高，可以实现更多的功能，如用户注册、登录等一系列用户需要与网站发生互动的功能基本都需要由动态网页来满足。动态网页，与网页上的各种动画、滚动字幕等视觉上的“动态效果”没有直接关系，动态网页也可以是纯文字内容的，也可以是包含各种动画的内容，这些只是网页具体内容的表现形式，无论网页是否具有动态效果，采用动态网站技术生成的网页都称为动态网页"></a>3、动态网页相比静态网页的交互性更高，可以实现更多的功能，如用户注册、登录等一系列用户需要与网站发生互动的功能基本都需要由动态网页来满足。动态网页，与网页上的各种动画、滚动字幕等视觉上的“动态效果”没有直接关系，动态网页也可以是纯文字内容的，也可以是包含各种动画的内容，这些只是网页具体内容的表现形式，无论网页是否具有动态效果，采用动态网站技术生成的网页都称为动态网页</h4><h4 id="4、动态网页不是一个独立存在服务器上的网页，当用户发送请求时，服务器可能还要拼凑其他元素才会返回一个完整的网页，而静态网页一旦上传到服务器上，就是实实在在保存在服务器上的网页文件。"><a href="#4、动态网页不是一个独立存在服务器上的网页，当用户发送请求时，服务器可能还要拼凑其他元素才会返回一个完整的网页，而静态网页一旦上传到服务器上，就是实实在在保存在服务器上的网页文件。" class="headerlink" title="4、动态网页不是一个独立存在服务器上的网页，当用户发送请求时，服务器可能还要拼凑其他元素才会返回一个完整的网页，而静态网页一旦上传到服务器上，就是实实在在保存在服务器上的网页文件。"></a>4、动态网页不是一个独立存在服务器上的网页，当用户发送请求时，服务器可能还要拼凑其他元素才会返回一个完整的网页，而静态网页一旦上传到服务器上，就是实实在在保存在服务器上的网页文件。</h4><h4 id="5、html是w3c规范的一种网页书写格式，是一种统一协议语言，静态网页。我们上网看的网页都是大部分都是基于html语言的。jsp是一种基于动态语言，jsp可以实现html的所有任务，"><a href="#5、html是w3c规范的一种网页书写格式，是一种统一协议语言，静态网页。我们上网看的网页都是大部分都是基于html语言的。jsp是一种基于动态语言，jsp可以实现html的所有任务，" class="headerlink" title="5、html是w3c规范的一种网页书写格式，是一种统一协议语言，静态网页。我们上网看的网页都是大部分都是基于html语言的。jsp是一种基于动态语言，jsp可以实现html的所有任务，"></a>5、html是w3c规范的一种网页书写格式，是一种统一协议语言，静态网页。我们上网看的网页都是大部分都是基于html语言的。jsp是一种基于动态语言，jsp可以实现html的所有任务，</h4><h4 id="6、HTML（Hypertext-Markup-Language）文本标记语言，它是静态页面，和JavaScript一样解释性语言，为什么说是解释性语言？因为，只要你有一个浏览器那么它就可以正常显示出来，而不需要指定的编译工具，只需在TXT文档中写上HTML标记就可以正常显示。JSP（Java-Server-Page）是Java服务端的页面，所以它是动态的，它是需要经过JDK编译后把内容发给客户端去显示，我们都知道，Java文件编译后会产生一个class文件，最终执行的就是这个class文件，"><a href="#6、HTML（Hypertext-Markup-Language）文本标记语言，它是静态页面，和JavaScript一样解释性语言，为什么说是解释性语言？因为，只要你有一个浏览器那么它就可以正常显示出来，而不需要指定的编译工具，只需在TXT文档中写上HTML标记就可以正常显示。JSP（Java-Server-Page）是Java服务端的页面，所以它是动态的，它是需要经过JDK编译后把内容发给客户端去显示，我们都知道，Java文件编译后会产生一个class文件，最终执行的就是这个class文件，" class="headerlink" title="6、HTML（Hypertext Markup Language）文本标记语言，它是静态页面，和JavaScript一样解释性语言，为什么说是解释性语言？因为，只要你有一个浏览器那么它就可以正常显示出来，而不需要指定的编译工具，只需在TXT文档中写上HTML标记就可以正常显示。JSP（Java Server Page）是Java服务端的页面，所以它是动态的，它是需要经过JDK编译后把内容发给客户端去显示，我们都知道，Java文件编译后会产生一个class文件，最终执行的就是这个class文件，"></a>6、HTML（Hypertext Markup Language）文本标记语言，它是静态页面，和JavaScript一样解释性语言，为什么说是解释性语言？因为，只要你有一个浏览器那么它就可以正常显示出来，而不需要指定的编译工具，只需在TXT文档中写上HTML标记就可以正常显示。JSP（Java Server Page）是Java服务端的页面，所以它是动态的，它是需要经过JDK编译后把内容发给客户端去显示，我们都知道，Java文件编译后会产生一个class文件，最终执行的就是这个class文件，</h4><h4 id="7、html和jsp的表头不一样，这个是JSP的头“-lt-page-language-”java”-import-”java-util-”-pageEncoding-”gbk”-gt-”在表头中有编码格式和倒入包等。也是很好区分的，在jsp中用-lt-gt-就可以写Java代码了，而html没有-lt-gt-。"><a href="#7、html和jsp的表头不一样，这个是JSP的头“-lt-page-language-”java”-import-”java-util-”-pageEncoding-”gbk”-gt-”在表头中有编码格式和倒入包等。也是很好区分的，在jsp中用-lt-gt-就可以写Java代码了，而html没有-lt-gt-。" class="headerlink" title="7、html和jsp的表头不一样，这个是JSP的头“ &lt;%@ page language=”java” import=”java.util.*” pageEncoding=”gbk”%&gt;”在表头中有编码格式和倒入包等。也是很好区分的，在jsp中用&lt;%%&gt;就可以写Java代码了，而html没有&lt;%%&gt;。"></a>7、html和jsp的表头不一样，这个是JSP的头“ &lt;%@ page language=”java” import=”java.util.*” pageEncoding=”gbk”%&gt;”在表头中有编码格式和倒入包等。也是很好区分的，在jsp中用&lt;%%&gt;就可以写Java代码了，而html没有&lt;%%&gt;。</h4><h4 id="8、不认识jsp或者asp什么什么的，但是有时候界面需要逻辑控制，所以我们就用相应的技术来实现，这样比较方便。而jsp在后台通过服务器解析为相应的html，然后在供浏览器识别显示。例如"><a href="#8、不认识jsp或者asp什么什么的，但是有时候界面需要逻辑控制，所以我们就用相应的技术来实现，这样比较方便。而jsp在后台通过服务器解析为相应的html，然后在供浏览器识别显示。例如" class="headerlink" title="8、不认识jsp或者asp什么什么的，但是有时候界面需要逻辑控制，所以我们就用相应的技术来实现，这样比较方便。而jsp在后台通过服务器解析为相应的html，然后在供浏览器识别显示。例如"></a>8、不认识jsp或者asp什么什么的，但是有时候界面需要逻辑控制，所以我们就用相应的技术来实现，这样比较方便。而jsp在后台通过服务器解析为相应的html，然后在供浏览器识别显示。例如</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;%</div><div class="line">if(flag == a)&#123;</div><div class="line">&lt;label&gt;a&lt;label&gt;</div><div class="line">&#125;else &#123;</div><div class="line">&lt;label&gt;b&lt;label&gt;</div><div class="line">&#125;</div><div class="line">%&gt;</div></pre></td></tr></table></figure>
+<h4 id="服务器在读取到这段代码后，根据相应的业务逻辑，编译成相应的servlet，再由servlet输出到页面（输出的就是html）。"><a href="#服务器在读取到这段代码后，根据相应的业务逻辑，编译成相应的servlet，再由servlet输出到页面（输出的就是html）。" class="headerlink" title="服务器在读取到这段代码后，根据相应的业务逻辑，编译成相应的servlet，再由servlet输出到页面（输出的就是html）。"></a>服务器在读取到这段代码后，根据相应的业务逻辑，编译成相应的servlet，再由servlet输出到页面（输出的就是html）。</h4><h4 id="9、总之而言，静态网页适合更新较少的网站，一般适用于展示型的网站，而动态网页则更新较多，一般用于用户互动较多的网站。"><a href="#9、总之而言，静态网页适合更新较少的网站，一般适用于展示型的网站，而动态网页则更新较多，一般用于用户互动较多的网站。" class="headerlink" title="9、总之而言，静态网页适合更新较少的网站，一般适用于展示型的网站，而动态网页则更新较多，一般用于用户互动较多的网站。"></a>9、总之而言，静态网页适合更新较少的网站，一般适用于展示型的网站，而动态网页则更新较多，一般用于用户互动较多的网站。</h4><h3 id="静态网页和动态网页实验测试"><a href="#静态网页和动态网页实验测试" class="headerlink" title="静态网页和动态网页实验测试"></a><strong>静态网页和动态网页实验测试</strong></h3><h4 id="1、在HBuilder中创建jsp页面，其内置的web静态服务器不能解析jsp表头，只能作为文本显示输出，但是可以解析其中的html部分。浏览器不能直接打开jsp文件。jsp页面如果想正确的显示，需要web容器进行解析。"><a href="#1、在HBuilder中创建jsp页面，其内置的web静态服务器不能解析jsp表头，只能作为文本显示输出，但是可以解析其中的html部分。浏览器不能直接打开jsp文件。jsp页面如果想正确的显示，需要web容器进行解析。" class="headerlink" title="1、在HBuilder中创建jsp页面，其内置的web静态服务器不能解析jsp表头，只能作为文本显示输出，但是可以解析其中的html部分。浏览器不能直接打开jsp文件。jsp页面如果想正确的显示，需要web容器进行解析。"></a>1、在HBuilder中创建jsp页面，其内置的web静态服务器不能解析jsp表头，只能作为文本显示输出，但是可以解析其中的html部分。浏览器不能直接打开jsp文件。jsp页面如果想正确的显示，需要web容器进行解析。</h4><p><img src="http://images2015.cnblogs.com/blog/1035591/201610/1035591-20161013091000593-2083168051.png" alt=""></p>
+<h4 id="2、在IntelliJ中创建web-application，需要启动tomcat，才能运行jsp，可以顺利解析jsp的表头。"><a href="#2、在IntelliJ中创建web-application，需要启动tomcat，才能运行jsp，可以顺利解析jsp的表头。" class="headerlink" title="2、在IntelliJ中创建web application，需要启动tomcat，才能运行jsp，可以顺利解析jsp的表头。"></a>2、在IntelliJ中创建web application，需要启动tomcat，才能运行jsp，可以顺利解析jsp的表头。</h4><p><img src="http://images2015.cnblogs.com/blog/1035591/201610/1035591-20161013091027687-1036668626.png" alt=""></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/qrcode.jpg" alt="Stevin wechat" style="width: 200px; max-width: 100%;"/>
+    <div>扫码及时获取更多文章</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Web服务/" rel="tag"># Web服务</a>
+          
+            <a href="/tags/Apache/" rel="tag"># Apache</a>
+          
+            <a href="/tags/Tomcat/" rel="tag"># Tomcat</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/08/微信小程序实现快递查询功能（界面传值、JSON数据请求和解析、radio-group的使用-）/" rel="next" title="微信小程序实现快递查询功能（界面传值、JSON数据请求和解析、radio-group的使用...）">
+                <i class="fa fa-chevron-left"></i> 微信小程序实现快递查询功能（界面传值、JSON数据请求和解析、radio-group的使用...）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://avatar.csdn.net/7/3/6/1_feng2qing.jpg"
+               alt="Stevin" />
+          <p class="site-author-name" itemprop="name">Stevin</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/1170197998" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.csdn.net/feng2qing?viewmode=list" target="_blank" title="CSDN博客">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  CSDN博客
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              联系我
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://wpa.qq.com/msgrd?v=3&uin=1170197998&site=qq&menu=yes" title="QQ" target="_blank">QQ</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://weibo.com/p/1005055558782565/home?from=page_100505&mod=TAB#place" title="WeiBo" target="_blank">WeiBo</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Apache-amp-Tomcat"><span class="nav-number">1.</span> <span class="nav-text">Apache & Tomcat</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Apache"><span class="nav-number">1.1.</span> <span class="nav-text">Apache</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、C语言实现的，专门用来提供HTTP服务。"><span class="nav-number">1.1.1.</span> <span class="nav-text">1、C语言实现的，专门用来提供HTTP服务。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、特性：简单、速度快、性能稳定、可配置（代理），主要用于解析静态文本，并发性能高，侧重于HTTP服务；"><span class="nav-number">1.1.2.</span> <span class="nav-text">2、特性：简单、速度快、性能稳定、可配置（代理），主要用于解析静态文本，并发性能高，侧重于HTTP服务；</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3、支持静态页（HTML），不支持动态请求如：CGI、Servlet-JSP、PHP、ASP等；"><span class="nav-number">1.1.3.</span> <span class="nav-text">3、支持静态页（HTML），不支持动态请求如：CGI、Servlet/JSP、PHP、ASP等；</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4、具有很强的可扩展性，可以通过插件支持PHP，还可以单向Apache连接Tomcat实现连通。Apache是世界使用排名第一的Web服务器。"><span class="nav-number">1.1.4.</span> <span class="nav-text">4、具有很强的可扩展性，可以通过插件支持PHP，还可以单向Apache连接Tomcat实现连通。Apache是世界使用排名第一的Web服务器。</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Tomcat"><span class="nav-number">1.2.</span> <span class="nav-text">Tomcat</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、是Java开发的一个符合JavaEE的Servlet规范的JSP服务器（Servlet容器），是-Apache-的扩展。免费的Java应用服务器"><span class="nav-number">1.2.1.</span> <span class="nav-text">1、是Java开发的一个符合JavaEE的Servlet规范的JSP服务器（Servlet容器），是 Apache 的扩展。免费的Java应用服务器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、主要用于解析JSP-Servlet，侧重于Servlet引擎；"><span class="nav-number">1.2.2.</span> <span class="nav-text">2、主要用于解析JSP/Servlet，侧重于Servlet引擎；</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3、支持静态页，但效率没有Apache高；支持Servlet、JSP请求；"><span class="nav-number">1.2.3.</span> <span class="nav-text">3、支持静态页，但效率没有Apache高；支持Servlet、JSP请求；</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4、Tomcat本身也内置了一个HTTP服务器用于支持静态内容，可以通过Tomcat的配置管理工具实现与Apache整合。"><span class="nav-number">1.2.4.</span> <span class="nav-text">4、Tomcat本身也内置了一个HTTP服务器用于支持静态内容，可以通过Tomcat的配置管理工具实现与Apache整合。</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Apache-Tomcat：两者整合使用的优点："><span class="nav-number">1.3.</span> <span class="nav-text">Apache + Tomcat：两者整合使用的优点：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#如果请求是静态网页则由Apache处理，并将结果返回；如果是动态请求，Apache会将解析工作转发给Tomcat处理，Tomcat处理后将结果通过Apache返回。这样可以达到分工合作，实现负载远衡，提高系统的性能。"><span class="nav-number">1.3.1.</span> <span class="nav-text">如果请求是静态网页则由Apache处理，并将结果返回；如果是动态请求，Apache会将解析工作转发给Tomcat处理，Tomcat处理后将结果通过Apache返回。这样可以达到分工合作，实现负载远衡，提高系统的性能。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Apache是一个web服务器环境程序，可以作为web服务器使用。不过只支持静态网页，如-asp-php-cgi-jsp-等动态网页的就显得无能为力。如果要在Apache环境下运行jsp的话就需要一个解释器来执行jsp网页，而这个jsp解释器就是Tomcat-还需要jdk，jsp需要连接数据库的话，就要jdk来提供连接数据库的驱程，所以要运行jsp的动态web服务器平台就需要Apache-tomcat-jdk。"><span class="nav-number">1.3.2.</span> <span class="nav-text">Apache是一个web服务器环境程序，可以作为web服务器使用。不过只支持静态网页，如(asp,php,cgi,jsp)等动态网页的就显得无能为力。如果要在Apache环境下运行jsp的话就需要一个解释器来执行jsp网页，而这个jsp解释器就是Tomcat, 还需要jdk，jsp需要连接数据库的话，就要jdk来提供连接数据库的驱程，所以要运行jsp的动态web服务器平台就需要Apache+tomcat+jdk。</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#静态网页-amp-动态网页"><span class="nav-number">2.</span> <span class="nav-text">静态网页 & 动态网页</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#静态网页："><span class="nav-number">2.1.</span> <span class="nav-text">静态网页：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、在静态Web程序中，客户端使用Web浏览器（IE、FireFox等）经过网络-Network-连接到服务器上，使用HTTP协议发起一个请求（Request），告诉服务器我现在需要得到哪个页面，所有的请求交给Web服务器，之后WEB服务器根据用户的需要，从文件系统（存放了所有静态页面的磁盘）取出内容。之后通过Web服务器返回给客户端，客户端接收到内容之后经过浏览器渲染解析，得到显示的效果。"><span class="nav-number">2.1.1.</span> <span class="nav-text">1、在静态Web程序中，客户端使用Web浏览器（IE、FireFox等）经过网络(Network)连接到服务器上，使用HTTP协议发起一个请求（Request），告诉服务器我现在需要得到哪个页面，所有的请求交给Web服务器，之后WEB服务器根据用户的需要，从文件系统（存放了所有静态页面的磁盘）取出内容。之后通过Web服务器返回给客户端，客户端接收到内容之后经过浏览器渲染解析，得到显示的效果。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、为了让静态页面显示更加好看，使用javascript／VBScript／ajax（AJAX即“Asynchronous-Javascript-And-XML”（异步JavaScript和XML），是指一种创建交互式网页应用的网页开发技术。）但是这些特效都是在客户端上借助于浏览器展现给用户的，所以在服务器上本身并没有任何的变化。"><span class="nav-number">2.1.2.</span> <span class="nav-text">2、为了让静态页面显示更加好看，使用javascript／VBScript／ajax（AJAX即“Asynchronous Javascript And XML”（异步JavaScript和XML），是指一种创建交互式网页应用的网页开发技术。）但是这些特效都是在客户端上借助于浏览器展现给用户的，所以在服务器上本身并没有任何的变化。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3、静态页面无法连接数据库；"><span class="nav-number">2.1.3.</span> <span class="nav-text">3、静态页面无法连接数据库；</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4、由于现在的web页面中，大量使用JS，导致浏览器打开页面，就会占用大量的内存，服务端的压力是减轻了，但压力转移到了客户端。"><span class="nav-number">2.1.4.</span> <span class="nav-text">4、由于现在的web页面中，大量使用JS，导致浏览器打开页面，就会占用大量的内存，服务端的压力是减轻了，但压力转移到了客户端。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5、运行在客户端的程序、网页、插件、组件，属于静态网页，例如：html，javascript等等，他们可以脱离服务器运行于浏览器客户端。"><span class="nav-number">2.1.5.</span> <span class="nav-text">5、运行在客户端的程序、网页、插件、组件，属于静态网页，例如：html，javascript等等，他们可以脱离服务器运行于浏览器客户端。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6：静态网页的内容相对稳定，URL地址相对于动态网页的更加容易被搜索引擎识别-所以网站进行SEO优化的时候一般都是建议采用静态网页。"><span class="nav-number">2.1.6.</span> <span class="nav-text">6：静态网页的内容相对稳定，URL地址相对于动态网页的更加容易被搜索引擎识别,所以网站进行SEO优化的时候一般都是建议采用静态网页。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7：静态网页无需数据库的支持，所以访问速度上较之动态网页比较快，不过随着浏览器以及宽带速度提升，这种差别会越来越小。"><span class="nav-number">2.1.7.</span> <span class="nav-text">7：静态网页无需数据库的支持，所以访问速度上较之动态网页比较快，不过随着浏览器以及宽带速度提升，这种差别会越来越小。</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#动态网页："><span class="nav-number">2.2.</span> <span class="nav-text">动态网页：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、动态WEB中，程序依然使用客户端和服务端，客户端依然使用浏览器（IE、FireFox等），通过网络-Network-连接到服务器上，使用HTTP协议发起请求（Request），现在的所有请求都先经过一个WEB-Server来处理。"><span class="nav-number">2.2.1.</span> <span class="nav-text">1、动态WEB中，程序依然使用客户端和服务端，客户端依然使用浏览器（IE、FireFox等），通过网络(Network)连接到服务器上，使用HTTP协议发起请求（Request），现在的所有请求都先经过一个WEB Server来处理。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、如果客户端请求的是静态资源-htm或者是-htm-，则将请求直接转交给WEB服务器，之后WEB服务器从文件系统中取出内容，发送回客户端浏览器进行解析执行。"><span class="nav-number">2.2.2.</span> <span class="nav-text">2、如果客户端请求的是静态资源(.htm或者是.htm)，则将请求直接转交给WEB服务器，之后WEB服务器从文件系统中取出内容，发送回客户端浏览器进行解析执行。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3、常用动态web资源开发技术：JSP-Servlet、ASP、PHP等。如果客户端请求的是动态资源（-jsp、-asp-aspx、-php），则先将请求转交给WEB-Container-WEB容器-，在WEB-Container中连接数据库，从数据库中取出数据等一系列操作后动态拼凑页面的展示内容，拼凑页面的展示内容后，把所有的展示内容交给WEB服务器，之后通过WEB服务器将内容发送回客户端浏览器进行解析执行。"><span class="nav-number">2.2.3.</span> <span class="nav-text">3、常用动态web资源开发技术：JSP/Servlet、ASP、PHP等。如果客户端请求的是动态资源（.jsp、.asp/.aspx、.php），则先将请求转交给WEB Container(WEB容器)，在WEB Container中连接数据库，从数据库中取出数据等一系列操作后动态拼凑页面的展示内容，拼凑页面的展示内容后，把所有的展示内容交给WEB服务器，之后通过WEB服务器将内容发送回客户端浏览器进行解析执行。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4、再进一步深入分析动态web的访问过程：浏览器访问web时，看似是直接访问的jsp页面，其实是，最先到达的地方是服务器，服务器创建好req和resp对象后再给jsp页面使用。JSP的前身是servlet；在jsp中完成设置字符集和取得表单参数后再调用servlet，完成业务处理。然后返回到jsp，jsp就会生成相应的html页面。该页面会返回到服务器，再由服务器，通过response对象返回给客户端。"><span class="nav-number">2.2.4.</span> <span class="nav-text">4、再进一步深入分析动态web的访问过程：浏览器访问web时，看似是直接访问的jsp页面，其实是，最先到达的地方是服务器，服务器创建好req和resp对象后再给jsp页面使用。JSP的前身是servlet；在jsp中完成设置字符集和取得表单参数后再调用servlet，完成业务处理。然后返回到jsp，jsp就会生成相应的html页面。该页面会返回到服务器，再由服务器，通过response对象返回给客户端。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5、运行在服务器端的程序、网页、组件，属于动态网页，例如：JSP-ASP-PHP等，它们会随不同客户、不同时间，返回不同的网页。"><span class="nav-number">2.2.5.</span> <span class="nav-text">5、运行在服务器端的程序、网页、组件，属于动态网页，例如：JSP,ASP,PHP等，它们会随不同客户、不同时间，返回不同的网页。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6、为什么需要web服务器？-web-server"><span class="nav-number">2.2.6.</span> <span class="nav-text">6、为什么需要web服务器？(web server)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1）不管什么web资源，想被远程计算机访问，都必须有一个与之对应的网络通信程序，当用户来访问时，这个网络通信程序读取web资源数据，并把数据发送给来访者。"><span class="nav-number">2.2.6.1.</span> <span class="nav-text">1）不管什么web资源，想被远程计算机访问，都必须有一个与之对应的网络通信程序，当用户来访问时，这个网络通信程序读取web资源数据，并把数据发送给来访者。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2）WEB服务器就是这样一个程序，它用于完成底层网络通迅，处理http协议。使用这些服务器，We应用的开发者只需要关注web资源怎么编写，而不需要关心资源如何发送到客户端手中，从而极大的减轻了开发者的开发工作量。"><span class="nav-number">2.2.6.2.</span> <span class="nav-text">2）WEB服务器就是这样一个程序，它用于完成底层网络通迅，处理http协议。使用这些服务器，We应用的开发者只需要关注web资源怎么编写，而不需要关心资源如何发送到客户端手中，从而极大的减轻了开发者的开发工作量。</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#静态网页和动态网页区别的简单描述"><span class="nav-number">2.3.</span> <span class="nav-text">静态网页和动态网页区别的简单描述</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、静态页面就是设计者把页面上所有东西都设定好、做死了，然后放上去，不管是谁在任何时候看到的页面内容都是一样的，一成不变（除非手动修改页面内容）。运行于客户端的程序、网页、插件、组件，属于静态网页，例如html页、Flash、JavaScript、VBScript等等，它们是永远不变的。静态html页面文件，可以直接用本地的浏览器打开。比如：file-Users-Phil-Documents-DevOps-HBuilderProjects-testJSP-index-html。静态页面放到什么地方都能运行的。动态页面则不行。"><span class="nav-number">2.3.1.</span> <span class="nav-text">1、静态页面就是设计者把页面上所有东西都设定好、做死了，然后放上去，不管是谁在任何时候看到的页面内容都是一样的，一成不变（除非手动修改页面内容）。运行于客户端的程序、网页、插件、组件，属于静态网页，例如html页、Flash、JavaScript、VBScript等等，它们是永远不变的。静态html页面文件，可以直接用本地的浏览器打开。比如：file:///Users/Phil/Documents/DevOps/HBuilderProjects/testJSP/index.html。静态页面放到什么地方都能运行的。动态页面则不行。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、程序是否在服务器端运行，这个是判断网页属不属于动态网页的重要标志。动态页面是需要服务器解释的。动态页面的内容一般都是依靠服务器端的程序来生成的，不同人、不同时候访问页面，显示的内容都可能不同。网页设计者在写好服务器端的页面程序后，不需要手工控制，页面内容会按照页面程序的安排自动更改变换。在服务器端运行的程序、网页、组件，属于动态网页，它们会随不同客户、不同时间，返回不同的网页，例如ASP、PHP、JSP、ASP-net、CGI等。"><span class="nav-number">2.3.2.</span> <span class="nav-text">2、程序是否在服务器端运行，这个是判断网页属不属于动态网页的重要标志。动态页面是需要服务器解释的。动态页面的内容一般都是依靠服务器端的程序来生成的，不同人、不同时候访问页面，显示的内容都可能不同。网页设计者在写好服务器端的页面程序后，不需要手工控制，页面内容会按照页面程序的安排自动更改变换。在服务器端运行的程序、网页、组件，属于动态网页，它们会随不同客户、不同时间，返回不同的网页，例如ASP、PHP、JSP、ASP.net、CGI等。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3、动态网页相比静态网页的交互性更高，可以实现更多的功能，如用户注册、登录等一系列用户需要与网站发生互动的功能基本都需要由动态网页来满足。动态网页，与网页上的各种动画、滚动字幕等视觉上的“动态效果”没有直接关系，动态网页也可以是纯文字内容的，也可以是包含各种动画的内容，这些只是网页具体内容的表现形式，无论网页是否具有动态效果，采用动态网站技术生成的网页都称为动态网页"><span class="nav-number">2.3.3.</span> <span class="nav-text">3、动态网页相比静态网页的交互性更高，可以实现更多的功能，如用户注册、登录等一系列用户需要与网站发生互动的功能基本都需要由动态网页来满足。动态网页，与网页上的各种动画、滚动字幕等视觉上的“动态效果”没有直接关系，动态网页也可以是纯文字内容的，也可以是包含各种动画的内容，这些只是网页具体内容的表现形式，无论网页是否具有动态效果，采用动态网站技术生成的网页都称为动态网页</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4、动态网页不是一个独立存在服务器上的网页，当用户发送请求时，服务器可能还要拼凑其他元素才会返回一个完整的网页，而静态网页一旦上传到服务器上，就是实实在在保存在服务器上的网页文件。"><span class="nav-number">2.3.4.</span> <span class="nav-text">4、动态网页不是一个独立存在服务器上的网页，当用户发送请求时，服务器可能还要拼凑其他元素才会返回一个完整的网页，而静态网页一旦上传到服务器上，就是实实在在保存在服务器上的网页文件。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5、html是w3c规范的一种网页书写格式，是一种统一协议语言，静态网页。我们上网看的网页都是大部分都是基于html语言的。jsp是一种基于动态语言，jsp可以实现html的所有任务，"><span class="nav-number">2.3.5.</span> <span class="nav-text">5、html是w3c规范的一种网页书写格式，是一种统一协议语言，静态网页。我们上网看的网页都是大部分都是基于html语言的。jsp是一种基于动态语言，jsp可以实现html的所有任务，</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6、HTML（Hypertext-Markup-Language）文本标记语言，它是静态页面，和JavaScript一样解释性语言，为什么说是解释性语言？因为，只要你有一个浏览器那么它就可以正常显示出来，而不需要指定的编译工具，只需在TXT文档中写上HTML标记就可以正常显示。JSP（Java-Server-Page）是Java服务端的页面，所以它是动态的，它是需要经过JDK编译后把内容发给客户端去显示，我们都知道，Java文件编译后会产生一个class文件，最终执行的就是这个class文件，"><span class="nav-number">2.3.6.</span> <span class="nav-text">6、HTML（Hypertext Markup Language）文本标记语言，它是静态页面，和JavaScript一样解释性语言，为什么说是解释性语言？因为，只要你有一个浏览器那么它就可以正常显示出来，而不需要指定的编译工具，只需在TXT文档中写上HTML标记就可以正常显示。JSP（Java Server Page）是Java服务端的页面，所以它是动态的，它是需要经过JDK编译后把内容发给客户端去显示，我们都知道，Java文件编译后会产生一个class文件，最终执行的就是这个class文件，</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7、html和jsp的表头不一样，这个是JSP的头“-lt-page-language-”java”-import-”java-util-”-pageEncoding-”gbk”-gt-”在表头中有编码格式和倒入包等。也是很好区分的，在jsp中用-lt-gt-就可以写Java代码了，而html没有-lt-gt-。"><span class="nav-number">2.3.7.</span> <span class="nav-text">7、html和jsp的表头不一样，这个是JSP的头“ <%@ page language=”java” import=”java.util.*” pageEncoding=”gbk”%>”在表头中有编码格式和倒入包等。也是很好区分的，在jsp中用<%%>就可以写Java代码了，而html没有<%%>。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8、不认识jsp或者asp什么什么的，但是有时候界面需要逻辑控制，所以我们就用相应的技术来实现，这样比较方便。而jsp在后台通过服务器解析为相应的html，然后在供浏览器识别显示。例如"><span class="nav-number">2.3.8.</span> <span class="nav-text">8、不认识jsp或者asp什么什么的，但是有时候界面需要逻辑控制，所以我们就用相应的技术来实现，这样比较方便。而jsp在后台通过服务器解析为相应的html，然后在供浏览器识别显示。例如</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#服务器在读取到这段代码后，根据相应的业务逻辑，编译成相应的servlet，再由servlet输出到页面（输出的就是html）。"><span class="nav-number">2.3.9.</span> <span class="nav-text">服务器在读取到这段代码后，根据相应的业务逻辑，编译成相应的servlet，再由servlet输出到页面（输出的就是html）。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9、总之而言，静态网页适合更新较少的网站，一般适用于展示型的网站，而动态网页则更新较多，一般用于用户互动较多的网站。"><span class="nav-number">2.3.10.</span> <span class="nav-text">9、总之而言，静态网页适合更新较少的网站，一般适用于展示型的网站，而动态网页则更新较多，一般用于用户互动较多的网站。</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#静态网页和动态网页实验测试"><span class="nav-number">2.4.</span> <span class="nav-text">静态网页和动态网页实验测试</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、在HBuilder中创建jsp页面，其内置的web静态服务器不能解析jsp表头，只能作为文本显示输出，但是可以解析其中的html部分。浏览器不能直接打开jsp文件。jsp页面如果想正确的显示，需要web容器进行解析。"><span class="nav-number">2.4.1.</span> <span class="nav-text">1、在HBuilder中创建jsp页面，其内置的web静态服务器不能解析jsp表头，只能作为文本显示输出，但是可以解析其中的html部分。浏览器不能直接打开jsp文件。jsp页面如果想正确的显示，需要web容器进行解析。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、在IntelliJ中创建web-application，需要启动tomcat，才能运行jsp，可以顺利解析jsp的表头。"><span class="nav-number">2.4.2.</span> <span class="nav-text">2、在IntelliJ中创建web application，需要启动tomcat，才能运行jsp，可以顺利解析jsp的表头。</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Stevin</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+    <script>
+      var cloudTieConfig = {
+        url: document.location.href, 
+        sourceId: "",
+        productKey: "50afed8cf0d542a0a1d3809b7def653f",
+        target: "cloud-tie-wrapper"
+      };
+    </script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
